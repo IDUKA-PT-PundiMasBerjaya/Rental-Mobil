@@ -12,12 +12,16 @@
             'nama' => $_POST['nama'],
             'merek' => $_POST['merek'],
             'tahun' => $_POST['tahun'],
+            'garasi_id_garasi' => $_POST['garasi_id_garasi'],
             'harga_id_harga' => $_POST['harga_id_harga'],
 		];
 
 		$message = $mobilController->tambahDataMobil($data);
     }
-    //inner join tabel Mata Pelajaran
+    //inner join tabel Harga dan Garasi
+    $dataGarasi = "SELECT id_garasi, tersedia FROM garasi";
+    $hasilGarasi = mysqli_query($kon, $dataGarasi);
+
     $dataHarga = "SELECT id_harga, harga_per_hari FROM harga";
 	$hasilHarga = mysqli_query($kon, $dataHarga);
 ?>
@@ -169,19 +173,33 @@
                     <td><input type="file" name="gambar" required></td>
                 </tr>
                 <tr>
-	            <td>Harga</td>
-	            <td>
-                    <select id="harga_id_harga" name="harga_id_harga" style="width :100%">
-                        <?php if (mysqli_num_rows($hasilHarga) > 0) : ?>
-                        <option value ="" disabled selected>Pilih ID Harga</option> <?php while ($row = mysqli_fetch_assoc($hasilHarga)) : ?>
-                        <option value ="<?php echo $row ['id_harga']; ?>"> <?php echo $row['id_harga'] . ' . ' . $row['harga_per_hari']; ?></option>
-                        <?php endwhile; ?>
-                        <?php else : ?>
-                        <option value ="" disabled selected>Tambahkan Data Harga terlebih Dahulu, Jika belum Ada </option>
-                        <?php endif; ?>
-		             </select>
-	            </td>
-            </tr>
+                <td>Tersedia</td>
+                    <td>
+                        <select id="garasi_id_garasi" name="garasi_id_garasi" style="width :100%">
+                            <?php if (mysqli_num_rows($hasilGarasi) > 0) : ?>
+                            <option value ="" disabled selected>Pilih ID Garasi</option> <?php while ($row = mysqli_fetch_assoc($hasilGarasi)) : ?>
+                            <option value ="<?php echo $row ['id_garasi']; ?>"> <?php echo $row['id_garasi'] . ' . ' . $row['tersedia']; ?></option>
+                            <?php endwhile; ?>
+                            <?php else : ?>
+                            <option value ="" disabled selected>Tambahkan Data Garasi terlebih Dahulu, Jika belum Ada </option>
+                            <?php endif; ?>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Harga Mobil</td>
+                    <td>
+                        <select id="harga_id_harga" name="harga_id_harga" style="width :100%">
+                            <?php if (mysqli_num_rows($hasilHarga) > 0) : ?>
+                            <option value ="" disabled selected>Pilih ID Harga</option> <?php while ($row = mysqli_fetch_assoc($hasilHarga)) : ?>
+                            <option value ="<?php echo $row ['id_harga']; ?>"> <?php echo $row['id_harga'] . ' . ' . $row['harga_per_hari']; ?></option>
+                            <?php endwhile; ?>
+                            <?php else : ?>
+                            <option value ="" disabled selected>Tambahkan Data Harga terlebih Dahulu, Jika belum Ada </option>
+                            <?php endif; ?>
+                        </select>
+                    </td>
+                </tr>
 			</table>
 			<input type="submit" name="submit" value="Tambah Data">
 			<?php  if (isset($message)): ?>

@@ -1,44 +1,28 @@
 <?php  
 	include_once("../../../config/koneksi.php");
-	include_once("../Controller/mobilupdate.php");
+	include_once("../Controller/hargaupdate.php");
 
-	$mobilController = new MobilController($kon);
+	$hargaController = new HargaController($kon);
 
 	if (isset($_POST['update'])) {
-	$id_mobil = $_POST['id_mobil'];
-	$nama = $_POST['nama'];
-    $merek = $_POST['merek'];
-    $tahun = $_POST['tahun'];
-    $gambar = $_POST['gambar'];
-    $garasi_id_garasi = $_POST['garasi_id_garasi'];
-    $harga_id_harga = $_POST['harga_id_harga'];
-
-		$message = $mobilController->updateMobil($id_mobil, $nama, $merek, $tahun, $gambar, $garasi_id_garasi,$harga_id_harga);
+		$id_harga = $_POST['id_harga'];
+		$harga_per_hari = $_POST['harga_per_hari'];
+		$message = $hargaController->updateHarga($id_harga, $harga_per_hari);
 		echo $message;
 
-		header("Location: ../../dashboard/data/dashboardkendaraan.php");
+		header("Location: ../../dashboard/data/dashboardharga.php");
 	}
 
-	  $id_mobil = null;
-    $nama = null;
-    $merek = null;
-    $tahun = null;
-	$gambar = null;
-    $garasi_id_garasi = null;
-    $harga_id_harga = null;
+	$id_harga = null;
+	$harga_per_hari = null;
 
-	if (isset($_GET['id_mobil']) && is_numeric($_GET['id_mobil'])) {
-		$id_mobil = $_GET['id_mobil'];
-		$result = $mobilController->getDataMobil($id_mobil);
+	if (isset($_GET['id_harga']) && is_numeric($_GET['id_harga'])) {
+		$id_harga = $_GET['id_harga'];
+		$result = $hargaController->getDataHarga($id_harga);
 
 		if ($result) {
-			$id_mobil = $result['id_mobil'];
-			$nama = $result['nama'];
-			$merek = $result['merek'];
-			$tahun = $result['tahun'];
-			$gambar = $result['gambar'];
-            $garasi_id_garasi = $result['garasi_id_garasi'];
-			$harga_id_harga = $result['harga_id_harga'];
+			$id_harga = $result['id_harga'];
+			$harga_per_hari = $result['harga_per_hari'];
 		} else{
 			echo "ID Tidak Valid.";
 		}
@@ -48,8 +32,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Halaman Update Kendaraan</title>
-    <link rel="stylesheet" href="../../css/output.css">
+	<title>Halaman Update Harga</title>
+	<link rel="stylesheet" href="../../css/output.css">
     <style>
         /* Style untuk judul tabel */
         h1 {
@@ -155,11 +139,7 @@
         /* Style untuk sel yang sejajar dengan ID Buku */
         td:first-child,
         td:nth-child(2),
-        td:nth-child(3),
-        td:nth-child(4),
-        td:nth-child(5),
-        td:nth-child(6),
-        td:nth-child(7) {
+        td:nth-child(3) {
             color: #020617; /* Warna teks Hitam */
         }
         /* Style untuk tombol update */
@@ -175,46 +155,25 @@
 </head>
 <body class="bg-gray-100">
     <div class="container mx-auto py-4"> 
-        <h1>Update Data Mobil</h1>
-        <nav>
-            <a href="../../dashboard/data/dashboardkendaraan.php">Home</a>
+	<h1>Update Data Mapel</h1>
+		<nav>
+            <a href="../../dashboard/data/dashboardharga.php">Home</a>
         </nav>
-        <form action="update.php" method="POST" name="update" enctype="multipart/form-data">
-            <table>
-                <tr>
-                    <td>ID Mobil</td>
-                    <td><input class="input_data_1" type="text" name="id_mobil" value="<?php echo $id_mobil ?>" readonly></td>
-                </tr>
-                <tr>
-                    <td>Nama Mobil</td>
-                    <td><input type="text" name="judul" value="<?php echo $nama ?>" required></td>
-                </tr>
-                <tr>
-                    <td>Merek</td>
-                    <td><input type="text" name="merek" value="<?php echo $merek ?>" required></td>
-                </tr>
-                <tr>
-                    <td>Tahun</td>
-                    <td><input type="text" name="tahun" value="<?php echo $tahun ?>" required></td>
-                </tr>
-                <tr>
-                    <td>Gambar</td>
-                    <td><input type="text" name="gambar" value="<?php echo $gambar ?>" required></td>
-                </tr>
-                <tr>
-                    <td>Garasi</td>
-                    <td><input type="text" name="garasi_id_garasi" value="<?php echo $garasi_id_garasi ?>" required></td>
-                </tr>
-                <tr>
-                    <td>Harga Mobil</td>
-                    <td><input type="text" name="harga_id_harga" value="<?php echo $harga_id_harga ?>" required></td>
-                </tr>
-            </table>
-              <div class="update-button">
-                  <input type="hidden" name="id_mobil" value="<?php echo $id_mobil; ?>">
-                  <input type="submit" name="update" value="Update">
-              </div>
-        </form>
-    </div>
+	<form action="update.php" method="POST", name="update", enctype="multipart/form-data">
+		<table border="1">
+			<tr>
+				<td>ID</td>
+				<td><input class="input_data_1" type="text" name="id_harga" value="<?php echo $id_harga ?>" readonly></td>
+			</tr>
+			<tr>
+				<td>Harga</td>
+				<td><input class="input" type="text" name="harga_per_hari" value="<?php echo $harga_per_hari ?>"></td>
+			</tr>
+		</table>
+		<div class="update-button">
+            <input type="hidden" name="id_harga" value="<?php echo $id_harga; ?>">
+            <input type="submit" name="update" value="Update">
+        </div>
+	</form>
 </body>
 </html>

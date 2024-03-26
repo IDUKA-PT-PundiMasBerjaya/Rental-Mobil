@@ -23,6 +23,7 @@
 		$merek = $mobilData['merk'];
 		$tahun = $mobilData['tahun'];
 		$gambar = $mobilData['gambar'];
+		$garasi_id_garasi = $mobilData['garasi_id_garasi'];
 		$harga_id_harga = $mobilData['harga_id_harga'];
 	}
 ?>

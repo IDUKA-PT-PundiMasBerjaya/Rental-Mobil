@@ -41,7 +41,12 @@
 				<td><?php echo $gambar; ?></td>
 			</tr>
 			<tr>
-				<td>Harga</td>
+				<td>Tersedia </td>
+				<td>: </td>
+				<td><?php echo $garasi_id_garasi; ?></td>
+			</tr>
+			<tr>
+				<td>Harga Mobil</td>
 				<td>: </td>
 				<td><?php echo $harga_id_harga; ?></td>
 			</tr>

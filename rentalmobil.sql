@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 26, 2024 at 05:38 AM
+-- Generation Time: Mar 26, 2024 at 09:42 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -62,9 +62,15 @@ CREATE TABLE `customer` (
 
 CREATE TABLE `garasi` (
   `id_garasi` int(11) NOT NULL,
-  `mobil_id_mobil` int(11) NOT NULL,
-  `ketersedia` int(11) NOT NULL
+  `tersedia` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `garasi`
+--
+
+INSERT INTO `garasi` (`id_garasi`, `tersedia`) VALUES
+(1, 5);
 
 -- --------------------------------------------------------
 
@@ -99,6 +105,7 @@ CREATE TABLE `kendaraan` (
   `merek` varchar(500) NOT NULL,
   `tahun` int(11) NOT NULL,
   `gambar` varchar(500) NOT NULL,
+  `garasi_id_garasi` int(11) NOT NULL,
   `harga_id_harga` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -106,8 +113,8 @@ CREATE TABLE `kendaraan` (
 -- Dumping data for table `kendaraan`
 --
 
-INSERT INTO `kendaraan` (`id_mobil`, `nama`, `merek`, `tahun`, `gambar`, `harga_id_harga`) VALUES
-(1, 'Ayla', 'Daihatsu', 2019, 'ayla.png', 2);
+INSERT INTO `kendaraan` (`id_mobil`, `nama`, `merek`, `tahun`, `gambar`, `garasi_id_garasi`, `harga_id_harga`) VALUES
+(1, 'Ayla', 'Daihatsu', 2019, 'ayla.png', 1, 2);
 
 -- --------------------------------------------------------
 
@@ -133,7 +140,7 @@ CREATE TABLE `penyewaan_mobil` (
   `id_sewa` int(11) NOT NULL,
   `tanggal_sewa` date NOT NULL,
   `tanggal_kembali` date NOT NULL,
-  `total_harga` int(11) NOT NULL,
+  `harga_total` int(11) NOT NULL,
   `cutomer_id_customer` int(11) NOT NULL,
   `mobil_id_mobil` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -158,8 +165,7 @@ ALTER TABLE `customer`
 -- Indexes for table `garasi`
 --
 ALTER TABLE `garasi`
-  ADD PRIMARY KEY (`id_garasi`),
-  ADD KEY `mobil_id_mobil` (`mobil_id_mobil`);
+  ADD PRIMARY KEY (`id_garasi`);
 
 --
 -- Indexes for table `harga`
@@ -172,7 +178,8 @@ ALTER TABLE `harga`
 --
 ALTER TABLE `kendaraan`
   ADD PRIMARY KEY (`id_mobil`),
-  ADD KEY `harga` (`harga_id_harga`);
+  ADD KEY `garasi_id_garasi` (`garasi_id_garasi`),
+  ADD KEY `harga_id_harga` (`harga_id_harga`);
 
 --
 -- Indexes for table `pengembalian_mobil`
@@ -186,8 +193,7 @@ ALTER TABLE `pengembalian_mobil`
 --
 ALTER TABLE `penyewaan_mobil`
   ADD PRIMARY KEY (`id_sewa`),
-  ADD KEY `garasi_id_mobil` (`total_harga`,`cutomer_id_customer`),
-  ADD KEY `cutomer_id_customer` (`cutomer_id_customer`),
+  ADD KEY `garasi_id_mobil` (`cutomer_id_customer`),
   ADD KEY `mobil_id_mobil` (`mobil_id_mobil`);
 
 --
@@ -210,7 +216,7 @@ ALTER TABLE `customer`
 -- AUTO_INCREMENT for table `garasi`
 --
 ALTER TABLE `garasi`
-  MODIFY `id_garasi` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_garasi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `harga`
@@ -241,16 +247,11 @@ ALTER TABLE `penyewaan_mobil`
 --
 
 --
--- Constraints for table `garasi`
---
-ALTER TABLE `garasi`
-  ADD CONSTRAINT `garasi_ibfk_1` FOREIGN KEY (`mobil_id_mobil`) REFERENCES `kendaraan` (`id_mobil`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
 -- Constraints for table `kendaraan`
 --
 ALTER TABLE `kendaraan`
-  ADD CONSTRAINT `kendaraan_ibfk_1` FOREIGN KEY (`harga_id_harga`) REFERENCES `harga` (`id_harga`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `kendaraan_ibfk_2` FOREIGN KEY (`garasi_id_garasi`) REFERENCES `garasi` (`id_garasi`) ON DELETE NO ACTION ON UPDATE CASCADE,
+  ADD CONSTRAINT `kendaraan_ibfk_3` FOREIGN KEY (`harga_id_harga`) REFERENCES `harga` (`id_harga`);
 
 --
 -- Constraints for table `pengembalian_mobil`
@@ -263,8 +264,7 @@ ALTER TABLE `pengembalian_mobil`
 --
 ALTER TABLE `penyewaan_mobil`
   ADD CONSTRAINT `penyewaan_mobil_ibfk_2` FOREIGN KEY (`cutomer_id_customer`) REFERENCES `customer` (`id_customer`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `penyewaan_mobil_ibfk_3` FOREIGN KEY (`mobil_id_mobil`) REFERENCES `kendaraan` (`id_mobil`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `penyewaan_mobil_ibfk_4` FOREIGN KEY (`total_harga`) REFERENCES `harga` (`id_harga`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `penyewaan_mobil_ibfk_3` FOREIGN KEY (`mobil_id_mobil`) REFERENCES `kendaraan` (`id_mobil`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

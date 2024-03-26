@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Dashboard Kendaraan</title>
+	<title>Dashboard Garasi</title>
 	<link rel="stylesheet" href="../../css/output.css">
 	<style>
         /* Style untuk judul tabel */
@@ -69,21 +69,14 @@
         td {
             font-size: 16px;
         }
-		/* Style untuk sel yang sejajar dengan ID Mobil */
+		/* Style untuk sel yang sejajar dengan ID Buku */
         th:first-child,
         th:nth-child(2),
-        th:nth-child(3),
-        th:nth-child(4),
-        th:nth-child(5),
-        th:nth-child(6),
-        th:nth-child(7),
-        th:nth-child(8) {
+        th:nth-child(3) {
             color: #fff; /* Warna teks putih */
         }
 
-        .btn-sewa {
-            color: #4338ca; /* Warna hijau muda */
-        }
+		/* Warna teks untuk tautan aksi */
         .btn-view {
             color: #38c172; /* Warna hijau muda */
         }
@@ -127,7 +120,7 @@
 </head>
 <body class="bg-gray-100">
 	<div class="container mx-auto py-8">
-		<form action="dashboardkendaraan.php" method="GET" class="mb-4">
+		<form action="dashboardgarasi.php" method="GET" class="mb-4">
            <div class="search-container">
                 <input type="text" name="cari" placeholder="Search..." class="border border-gray-400 rounded-md px-2 py-1" style="font-size: 20px;">
                 <input type="submit" value="Cari" class="btn bg-blue-500 text-white px-4 py-1 rounded-md" style="font-size: 25px;">
@@ -138,66 +131,42 @@
 			$cari = $_GET['cari'];
 		}
 	?>
-	<h1> Mobil Yang Tersedia </h1>
+	<h1> Data Garasi </h1>
 		<nav>
 			<div>
-				<a href="../../kendaraan/View/tambah.php" class="btn bg-blue-500 text-white">Tambah Data Kendaraan</a>
-				<a href="../../kendaraan/View/cetak.php" target="_blank" class="btn bg-blue-500 text-white">Cetak</a>
+				<a href="../../garasi/View/tambah.php" class="btn bg-blue-500 text-white">Tambah Data Garasi</a>
+				<a href="../../garasi/View/cetak.php" target="_blank" class="btn bg-blue-500 text-white">Cetak</a>
 			</div>
             <div>
                 <a href="../dashboard.php" class="btn bg-blue-500 text-white">Home</a>
             </div>
         </nav>
-	<!-- Tabel Kendaraan -->
-	<table border="1" >
+	<!-- Tabel Garasi -->
+	<table border="1">
 			<?php  
 				if (isset($_GET['cari'])) {
 					$cari = $_GET['cari'];
-					$ambildata = mysqli_query($kon, "SELECT kendaraan.*, harga.harga_per_hari AS harga_mobil, garasi.tersedia AS stok
-                                        FROM kendaraan
-                                        INNER JOIN harga ON kendaraan.harga_id_harga = harga.id_harga
-                                        INNER JOIN garasi ON kendaraan.garasi_id_garasi = garasi.id_garasi
-                                        WHERE kendaraan.id_mobil LIKE '%".$cari."%' OR kendaraan.nama LIKE '%".$cari."%'");
+					$ambildata = mysqli_query($kon, "SELECT * FROM garasi WHERE id_garasi LIKE '%".$cari."%' OR tersedia LIKE '%".$cari."%'");
 				} else {
-					$ambildata = mysqli_query($kon, "SELECT kendaraan.*, harga.harga_per_hari AS harga_mobil, garasi.tersedia AS stok
-                                          FROM kendaraan
-                                          INNER JOIN harga ON kendaraan.harga_id_harga = harga.id_harga
-                                          INNER JOIN garasi ON kendaraan.garasi_id_garasi = garasi.id_garasi
-                                          ORDER BY kendaraan.id_mobil ASC ");
+					$ambildata = mysqli_query($kon, "SELECT * FROM garasi ORDER BY id_garasi ASC ");
 					$num = mysqli_num_rows($ambildata);
 				}
 			?>
 		<tr>
-        	<th class="border border-gray-400 px-4 py-2 text-center">ID Mobil</th>
-            <th class="border border-gray-400 px-4 py-2 text-center">Nama</th>
-            <th class="border border-gray-400 px-4 py-2 text-center">Merek</th>
-            <th class="border border-gray-400 px-4 py-2 text-center">Tahun</th>
-            <th class="border border-gray-400 px-4 py-2 text-center">Gambar</th>
-            <th class="border border-gray-400 px-4 py-2 text-center">Tersedia</th>
-            <th class="border border-gray-400 px-4 py-2 text-center">Harga Mobil</th>
-            <th class="border border-gray-400 px-4 py-2 text-center">Aksi</th>
-        </tr>
+			<th class="border border-gray-400 px-4 py-2 text-center"> ID Garasi </th>
+			<th class="border border-gray-400 px-4 py-2 text-center"> Tersedia </th>
+			<th class="border border-gray-400 px-4 py-2 text-center"> Aksi </th>
+		</tr>
 		<tbody>
 		<?php  
 			while ($userAmbilData = mysqli_fetch_array($ambildata)) {
 				echo "<tr>";
-                    echo "<td class='border border-gray-400 px-4 py-2'>" . $id_mobil = $userAmbilData['id_mobil'] . "</td>";
-                    echo "<td class='border border-gray-400 px-4 py-2'>" . $nama = $userAmbilData['nama'] . "</td>";
-                    echo "<td class='border border-gray-400 px-4 py-2'>" . $merek =$userAmbilData['merek'] . "</td>";
-                    echo "<td class='border border-gray-400 px-4 py-2'>" . $tahun = $userAmbilData['tahun'] . "</td>";
-                    echo "<td class='border border-gray-400 px-4 py-2'>";
-                        $data = mysqli_query($kon, "SELECT * FROM kendaraan WHERE id_mobil = '{$userAmbilData['id_mobil']}'");
-                        while ($row = mysqli_fetch_array($data)) {
-                            echo "<a href='javascript:void(0);' onclick=\"window.open(../../kendaraan/aset/{$row['gambar']}', '_blank');\">
-                                    <img src='../../kendaraan/aset/{$row['gambar']}' alt='Gambar Mobil' width='110' height='150'></a>";
-                        }
-                        "</td>";
-                    echo "<td>" . $userAmbilData['stok'] . "</td>";
-                    echo "<td>" . $userAmbilData['harga_mobil'] . "</td>";
-					echo "<td>
-							<a href='../../kendaraan/View/view.php?id_mobil=" . $userAmbilData['id_mobil'] . "' class='btn btn-view'> View </a> | 
-							<a href='../../kendaraan/View/update.php?id_mobil=" . $userAmbilData['id_mobil'] . "' class='btn btn-edit'> Edit </a> | 
-							<a href='../../kendaraan/Controller/mobilhapus.php?id_mobil=" . $userAmbilData['id_mobil'] ."' class='btn btn-hapus'> Hapus </a> 
+					echo "<td class='border border-gray-400 px-4 py-2'>" . $id_garasi = $userAmbilData['id_garasi'] . "</td>";
+					echo "<td class='border border-gray-400 px-4 py-2'>" . $tersedia = $userAmbilData['tersedia'] . "</td>";
+					echo "<td class='border border-gray-400 px-4 py-2'> 
+							<a href='../../garasi/View/view.php?id_garasi=" . $userAmbilData['id_garasi'] . "' class='btn btn-view'> View </a> | 
+							<a href='../../garasi/View/update.php?id_garasi=" . $userAmbilData['id_garasi'] . "' class='btn btn-edit'> Edit </a> |
+							<a href='../../garasi/Controller/garasihapus.php?id_garasi=" . $userAmbilData['id_garasi'] ."' class='btn btn-hapus'> Hapus </a>  
 						</td>";
 				echo "</tr>";
 			}

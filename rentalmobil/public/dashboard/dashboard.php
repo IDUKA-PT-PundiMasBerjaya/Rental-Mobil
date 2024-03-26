@@ -66,8 +66,8 @@
 
     <!-- Navbar vertikal -->
     <nav class="horizontal-navbar">
-        <div class="nav-box"><a href="data/dashboardgarasi.php">Data Garasi</a></div>
         <div class="nav-box"><a href="data/dashboardkendaraan.php">Data Kendaraan</a></div>
+        <div class="nav-box"><a href="data/dashboardgarasi.php">Data Garasi</a></div>
         <div class="nav-box"><a href="data/dashboardharga.php">Data Harga</a></div>
         
     </nav>

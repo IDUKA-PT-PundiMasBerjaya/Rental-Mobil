@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Dashboard Guru</title>
+	<title>Dashboard Harga</title>
 	<link rel="stylesheet" href="../../css/output.css">
 	<style>
         /* Style untuk judul tabel */
@@ -131,7 +131,7 @@
 			$cari = $_GET['cari'];
 		}
 	?>
-	<h1> Data Guru </h1>
+	<h1> Data Harga </h1>
 		<nav>
 			<div>
 				<a href="../../harga/View/tambah.php" class="btn bg-blue-500 text-white">Tambah Data Harga</a>
@@ -141,7 +141,7 @@
                 <a href="../dashboard.php" class="btn bg-blue-500 text-white">Home</a>
             </div>
         </nav>
-	<!-- Tabel Guru -->
+	<!-- Tabel Harga -->
 	<table border="1">
 			<?php  
 				if (isset($_GET['cari'])) {

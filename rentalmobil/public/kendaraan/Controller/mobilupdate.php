@@ -8,8 +8,8 @@
 			$this->kon = $connection;
 		}
 
-		public function updateMobil($id_mobil, $nama, $merek, $tahun, $gambar, $harga_per_hari) {
-			$result = mysqli_query($this->kon, "UPDATE kendaraan SET nama = '$nama', merek = '$merek', tahun = '$tahun', gambar = '$gambar', harga_per_hari = '$harga_per_hari' WHERE id_mobil = '$id_mobil'");
+		public function updateMobil($id_mobil, $nama, $merek, $tahun, $gambar, $garasi, $harga_per_hari) {
+			$result = mysqli_query($this->kon, "UPDATE kendaraan SET nama = '$nama', merek = '$merek', tahun = '$tahun', gambar = '$gambar', garasi_id_garasi = '$garasi', harga_per_hari = '$harga_per_hari' WHERE id_mobil = '$id_mobil'");
 
 			if ($result) {
 				return "Sukses meng-update data.";
