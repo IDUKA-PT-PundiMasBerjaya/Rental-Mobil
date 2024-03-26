@@ -1,0 +1,272 @@
+-- phpMyAdmin SQL Dump
+-- version 5.2.1
+-- https://www.phpmyadmin.net/
+--
+-- Host: 127.0.0.1
+-- Generation Time: Mar 26, 2024 at 05:38 AM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.0.30
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Database: `rentalmobil`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `admin`
+--
+
+CREATE TABLE `admin` (
+  `id_admin` int(11) NOT NULL,
+  `username` varchar(500) NOT NULL,
+  `password` varchar(500) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `admin`
+--
+
+INSERT INTO `admin` (`id_admin`, `username`, `password`) VALUES
+(1, 'Admin 1', 'Drags421');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `customer`
+--
+
+CREATE TABLE `customer` (
+  `id_customer` int(11) NOT NULL,
+  `nama` varchar(100) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `no_hp` varchar(100) NOT NULL,
+  `alamat` varchar(500) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `garasi`
+--
+
+CREATE TABLE `garasi` (
+  `id_garasi` int(11) NOT NULL,
+  `mobil_id_mobil` int(11) NOT NULL,
+  `ketersedia` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `harga`
+--
+
+CREATE TABLE `harga` (
+  `id_harga` int(11) NOT NULL,
+  `harga_per_hari` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `harga`
+--
+
+INSERT INTO `harga` (`id_harga`, `harga_per_hari`) VALUES
+(1, 55000),
+(2, 60000),
+(3, 75000),
+(4, 120000);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `kendaraan`
+--
+
+CREATE TABLE `kendaraan` (
+  `id_mobil` int(11) NOT NULL,
+  `nama` varchar(500) NOT NULL,
+  `merek` varchar(500) NOT NULL,
+  `tahun` int(11) NOT NULL,
+  `gambar` varchar(500) NOT NULL,
+  `harga_id_harga` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `kendaraan`
+--
+
+INSERT INTO `kendaraan` (`id_mobil`, `nama`, `merek`, `tahun`, `gambar`, `harga_id_harga`) VALUES
+(1, 'Ayla', 'Daihatsu', 2019, 'ayla.png', 2);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pengembalian_mobil`
+--
+
+CREATE TABLE `pengembalian_mobil` (
+  `id_pengembalian` int(11) NOT NULL,
+  `jumlah_mobil` int(11) NOT NULL,
+  `tanggal_pengembalian` date NOT NULL,
+  `penyewaan_id_sewa` int(11) NOT NULL,
+  `denda` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `penyewaan_mobil`
+--
+
+CREATE TABLE `penyewaan_mobil` (
+  `id_sewa` int(11) NOT NULL,
+  `tanggal_sewa` date NOT NULL,
+  `tanggal_kembali` date NOT NULL,
+  `total_harga` int(11) NOT NULL,
+  `cutomer_id_customer` int(11) NOT NULL,
+  `mobil_id_mobil` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `admin`
+--
+ALTER TABLE `admin`
+  ADD PRIMARY KEY (`id_admin`);
+
+--
+-- Indexes for table `customer`
+--
+ALTER TABLE `customer`
+  ADD PRIMARY KEY (`id_customer`);
+
+--
+-- Indexes for table `garasi`
+--
+ALTER TABLE `garasi`
+  ADD PRIMARY KEY (`id_garasi`),
+  ADD KEY `mobil_id_mobil` (`mobil_id_mobil`);
+
+--
+-- Indexes for table `harga`
+--
+ALTER TABLE `harga`
+  ADD PRIMARY KEY (`id_harga`);
+
+--
+-- Indexes for table `kendaraan`
+--
+ALTER TABLE `kendaraan`
+  ADD PRIMARY KEY (`id_mobil`),
+  ADD KEY `harga` (`harga_id_harga`);
+
+--
+-- Indexes for table `pengembalian_mobil`
+--
+ALTER TABLE `pengembalian_mobil`
+  ADD PRIMARY KEY (`id_pengembalian`),
+  ADD KEY `garasi_id_mobil` (`penyewaan_id_sewa`);
+
+--
+-- Indexes for table `penyewaan_mobil`
+--
+ALTER TABLE `penyewaan_mobil`
+  ADD PRIMARY KEY (`id_sewa`),
+  ADD KEY `garasi_id_mobil` (`total_harga`,`cutomer_id_customer`),
+  ADD KEY `cutomer_id_customer` (`cutomer_id_customer`),
+  ADD KEY `mobil_id_mobil` (`mobil_id_mobil`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `admin`
+--
+ALTER TABLE `admin`
+  MODIFY `id_admin` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `customer`
+--
+ALTER TABLE `customer`
+  MODIFY `id_customer` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `garasi`
+--
+ALTER TABLE `garasi`
+  MODIFY `id_garasi` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `harga`
+--
+ALTER TABLE `harga`
+  MODIFY `id_harga` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `kendaraan`
+--
+ALTER TABLE `kendaraan`
+  MODIFY `id_mobil` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `pengembalian_mobil`
+--
+ALTER TABLE `pengembalian_mobil`
+  MODIFY `id_pengembalian` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `penyewaan_mobil`
+--
+ALTER TABLE `penyewaan_mobil`
+  MODIFY `id_sewa` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `garasi`
+--
+ALTER TABLE `garasi`
+  ADD CONSTRAINT `garasi_ibfk_1` FOREIGN KEY (`mobil_id_mobil`) REFERENCES `kendaraan` (`id_mobil`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `kendaraan`
+--
+ALTER TABLE `kendaraan`
+  ADD CONSTRAINT `kendaraan_ibfk_1` FOREIGN KEY (`harga_id_harga`) REFERENCES `harga` (`id_harga`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `pengembalian_mobil`
+--
+ALTER TABLE `pengembalian_mobil`
+  ADD CONSTRAINT `pengembalian_mobil_ibfk_1` FOREIGN KEY (`penyewaan_id_sewa`) REFERENCES `penyewaan_mobil` (`id_sewa`);
+
+--
+-- Constraints for table `penyewaan_mobil`
+--
+ALTER TABLE `penyewaan_mobil`
+  ADD CONSTRAINT `penyewaan_mobil_ibfk_2` FOREIGN KEY (`cutomer_id_customer`) REFERENCES `customer` (`id_customer`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `penyewaan_mobil_ibfk_3` FOREIGN KEY (`mobil_id_mobil`) REFERENCES `kendaraan` (`id_mobil`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `penyewaan_mobil_ibfk_4` FOREIGN KEY (`total_harga`) REFERENCES `harga` (`id_harga`) ON DELETE CASCADE ON UPDATE CASCADE;
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
