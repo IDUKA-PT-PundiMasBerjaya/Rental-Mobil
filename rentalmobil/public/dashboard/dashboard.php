@@ -70,7 +70,7 @@
         <div class="nav-box"><a href="data/dashboardgarasi.php">Data Garasi</a></div>
         <div class="nav-box"><a href="data/dashboardharga.php">Data Harga</a></div>
         <div class="nav-box"><a href="data/dashboardcustomer.php">Data Customer</a></div>
-        
+        <div class="nav-box"><a href="data/dashboardpenyewaanmobil.php">Data Sewa Mobil</a></div>
     </nav>
 
     </div>

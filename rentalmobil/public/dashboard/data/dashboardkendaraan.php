@@ -77,7 +77,8 @@
         th:nth-child(5),
         th:nth-child(6),
         th:nth-child(7),
-        th:nth-child(8) {
+        th:nth-child(8), 
+        th:nth-child(9) {
             color: #fff; /* Warna teks putih */
         }
 
@@ -175,10 +176,12 @@
             <th class="border border-gray-400 px-4 py-2 text-center">Gambar</th>
             <th class="border border-gray-400 px-4 py-2 text-center">Tersedia</th>
             <th class="border border-gray-400 px-4 py-2 text-center">Harga Mobil</th>
+            <th class="border border-gray-400 px-4 py-2 text-center">Total Harga Mobil</th>
             <th class="border border-gray-400 px-4 py-2 text-center">Aksi</th>
         </tr>
 		<tbody>
-		<?php  
+		<?php
+            $totalHargaSemuaMobil = 0; // Inisialisasi variabel total harga semua mobil  
 			while ($userAmbilData = mysqli_fetch_array($ambildata)) {
 				echo "<tr>";
                     echo "<td class='border border-gray-400 px-4 py-2'>" . $id_mobil = $userAmbilData['id_mobil'] . "</td>";
@@ -189,15 +192,20 @@
                         $data = mysqli_query($kon, "SELECT * FROM kendaraan WHERE id_mobil = '{$userAmbilData['id_mobil']}'");
                         while ($row = mysqli_fetch_array($data)) {
                             echo "<a href='javascript:void(0);' onclick=\"window.open(../../kendaraan/aset/{$row['gambar']}', '_blank');\">
-                                    <img src='../../kendaraan/aset/{$row['gambar']}' alt='Gambar Mobil' width='110' height='150'></a>";
+                                    <img src='../../kendaraan/aset/{$row['gambar']}' alt='Gambar Mobil' width='240' height='300'></a>";
                         }
                         "</td>";
                     echo "<td>" . $userAmbilData['stok'] . "</td>";
-                    echo "<td>" . $userAmbilData['harga_mobil'] . "</td>";
+                    echo "<td>Harga 1 Mobil = Rp. " . number_format($userAmbilData['harga_mobil'], 0, ',', '.') . "</td>";
+                    // Menghitung total harga per mobil
+                    $totalHargaPerMobil = $userAmbilData['harga_mobil'] * $userAmbilData['stok'];
+                    // Menambahkan total harga per mobil ke total harga semua mobil
+                    $totalHargaSemuaMobil += $totalHargaPerMobil;
+                    echo "<td>Rp. " . number_format($totalHargaPerMobil, 0, ',', '.') . "</td>"; // Menampilkan total harga per mobil
 					echo "<td>
 							<a href='../../kendaraan/View/view.php?id_mobil=" . $userAmbilData['id_mobil'] . "' class='btn btn-view'> View </a> | 
 							<a href='../../kendaraan/View/update.php?id_mobil=" . $userAmbilData['id_mobil'] . "' class='btn btn-edit'> Edit </a> | 
-							<a href='../../kendaraan/Controller/mobilhapus.php?id_mobil=" . $userAmbilData['id_mobil'] ."' class='btn btn-hapus'> Hapus </a> 
+							<a href='../../kendaraan/Controller/mobilhapus.php?id_mobil=" . $userAmbilData['id_mobil'] . "' class='btn btn-hapus'> Hapus </a> 
 						</td>";
 				echo "</tr>";
 			}

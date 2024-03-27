@@ -1,28 +1,28 @@
 <?php  
 	include_once("../../../config/koneksi.php");
-	include_once("../Controller/hargaupdate.php");
+	include_once("../Controller/garasiupdate.php");
 
-	$hargaController = new HargaController($kon);
+	$garasiController = new GarasiController($kon);
 
 	if (isset($_POST['update'])) {
-		$id_harga = $_POST['id_harga'];
-		$harga_per_hari = $_POST['harga_per_hari'];
-		$message = $hargaController->updateHarga($id_harga, $harga_per_hari);
+		$id_garasi = $_POST['id_garasi'];
+		$tersedia = $_POST['tersedia'];
+		$message = $garasiController->updateGarasi($id_garasi, $tersedia);
 		echo $message;
 
-		header("Location: ../../dashboard/data/dashboardharga.php");
+		header("Location: ../../dashboard/data/dashboardgarasi.php");
 	}
 
-	$id_harga = null;
-	$harga_per_hari = null;
+	$id_garasi = null;
+	$tersedia = null;
 
-	if (isset($_GET['id_harga']) && is_numeric($_GET['id_harga'])) {
-		$id_harga = $_GET['id_harga'];
-		$result = $hargaController->getDataHarga($id_harga);
+	if (isset($_GET['id_garasi']) && is_numeric($_GET['id_garasi'])) {
+		$id_garasi = $_GET['id_garasi'];
+		$result = $garasiController->getDataGarasi($id_garasi);
 
 		if ($result) {
-			$id_harga = $result['id_harga'];
-			$harga_per_hari = $result['harga_per_hari'];
+			$id_garasi = $result['id_garasi'];
+			$tersedia = $result['tersedia'];
 		} else{
 			echo "ID Tidak Valid.";
 		}
@@ -32,7 +32,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Halaman Update Harga</title>
+	<title>Halaman Update Garasi</title>
 	<link rel="stylesheet" href="../../css/output.css">
     <style>
         /* Style untuk judul tabel */
@@ -157,21 +157,21 @@
     <div class="container mx-auto py-4"> 
 	<h1>Update Data Mapel</h1>
 		<nav>
-            <a href="../../dashboard/data/dashboardharga.php">Home</a>
+            <a href="../../dashboard/data/dashboardgarasi.php">Home</a>
         </nav>
 	<form action="update.php" method="POST", name="update", enctype="multipart/form-data">
 		<table border="1">
 			<tr>
-				<td>ID</td>
-				<td><input class="input_data_1" type="text" name="id_harga" value="<?php echo $id_harga ?>" readonly></td>
+				<td>ID Garasi</td>
+				<td><input class="input_data_1" type="text" name="id_garasi" value="<?php echo $id_garasi ?>" readonly></td>
 			</tr>
 			<tr>
-				<td>Harga</td>
-				<td><input class="input" type="text" name="harga_per_hari" value="<?php echo $harga_per_hari ?>"></td>
+				<td>Tersedia</td>
+				<td><input class="input" type="text" name="tersedia" value="<?php echo $tersedia ?>"></td>
 			</tr>
 		</table>
 		<div class="update-button">
-            <input type="hidden" name="id_harga" value="<?php echo $id_harga; ?>">
+            <input type="hidden" name="id_garasi" value="<?php echo $id_garasi; ?>">
             <input type="submit" name="update" value="Update">
         </div>
 	</form>

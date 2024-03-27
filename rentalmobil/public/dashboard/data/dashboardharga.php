@@ -162,7 +162,7 @@
 			while ($userAmbilData = mysqli_fetch_array($ambildata)) {
 				echo "<tr>";
 					echo "<td class='border border-gray-400 px-4 py-2'>" . $id_harga = $userAmbilData['id_harga'] . "</td>";
-					echo "<td class='border border-gray-400 px-4 py-2'>" . $harga_per_hari = $userAmbilData['harga_per_hari'] . "</td>";
+					echo "<td class='border border-gray-400 px-4 py-2'>Rp " . number_format($userAmbilData['harga_per_hari'], 0, ',', '.') . "</td>";
 					echo "<td class='border border-gray-400 px-4 py-2'> 
 							<a href='../../harga/View/view.php?id_harga=" . $userAmbilData['id_harga'] . "' class='btn btn-view'> View </a> | 
 							<a href='../../harga/View/update.php?id_harga=" . $userAmbilData['id_harga'] . "' class='btn btn-edit'> Edit </a> |
