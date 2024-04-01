@@ -9,7 +9,7 @@
 		}
 
 		public function tambahGarasi() {
-			$setAuto = mysqli_query($this->kon, "SELECT MAX(id_garasi) AS max_id FROM garasi");
+			$setAuto = mysqli_query($this->kon, "SELECT MAX(idgarasi) AS max_id FROM garasi");
 			$result = mysqli_fetch_assoc($setAuto);
 			$max_id = $result['max_id'];
 
@@ -21,10 +21,10 @@
 		}
 
 		public function tambahDataGarasi($data) {
-			$id_garasi = $data['id_garasi'];
+			$idgarasi = $data['idgarasi'];
 			$tersedia = $data['tersedia'];
 
-					$insertData = mysqli_query($this->kon, "INSERT INTO garasi (id_garasi, tersedia) VALUES ('$id_garasi', '$tersedia')");
+					$insertData = mysqli_query($this->kon, "INSERT INTO garasi (idgarasi, tersedia) VALUES ('$idgarasi', '$tersedia')");
 
 					if ($insertData) {
 						return "Data berhasil disimpan.";

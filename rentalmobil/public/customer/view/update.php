@@ -5,30 +5,30 @@
 	$customerController = new CustomerController($kon);
 
 	if (isset($_POST['update'])) {
-		$id_customer = $_POST['id_customer'];
+		$idcustomer = $_POST['idcustomer'];
 		$nama = $_POST['nama'];
 		$alamat = $_POST['alamat'];
 		$email = $_POST['email'];
 		$no_hp = $_POST['no_hp'];
 
-		$message = $customerController->updateCustomer($id_customer, $nama, $alamat, $email, $no_hp);
+		$message = $customerController->updateCustomer($idcustomer, $nama, $alamat, $email, $no_hp);
 		echo $message;
 
 		header("Location: ../../dashboard/data/dashboardcustomer.php");
 	}
 
-	$id_customer = null;
+	$idcustomer = null;
 	$nama = null;
 	$alamat = null;
 	$email = null;
 	$no_hp = null;
 
-	if (isset($_GET['id_customer']) && is_numeric($_GET['id_customer'])) {
-		$id_customer = $_GET['id_customer'];
-		$result = $customerController->getDataCustomer($id_customer);
+	if (isset($_GET['idcustomer']) && is_numeric($_GET['idcustomer'])) {
+		$idcustomer = $_GET['idcustomer'];
+		$result = $customerController->getDataCustomer($idcustomer);
 
 		if ($result) {
-			$id_customer = $result['id_customer'];
+			$idcustomer = $result['idcustomer'];
 			$nama = $result['nama'];
 			$alamat = $result['alamat'];
 			$email = $result['email'];
@@ -176,7 +176,7 @@
 		<table border="1">
 			<tr>
 				<td>ID Customer</td>
-				<td><input class="input_data_1" type="text" name="id_customer" value="<?php echo $id_customer ?>" readonly></td>
+				<td><input class="input_data_1" type="text" name="idcustomer" value="<?php echo $idcustomer ?>" readonly></td>
 			</tr>
 			<tr>
 				<td>Nama Customer</td>
@@ -196,7 +196,7 @@
 			</tr>
 		</table>
 			<div class="update-button">
-                <input type="hidden" name="id_customer" value="<?php echo $id_customer; ?>">
+                <input type="hidden" name="idcustomer" value="<?php echo $idcustomer; ?>">
                 <input type="submit" name="update" value="Update">
             </div>
 	</form>

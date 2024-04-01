@@ -8,8 +8,8 @@
 			$this->kon = $connection;
 		}
 
-		public function deleteHarga($id_harga) {
-			$deletedata = mysqli_query($this->kon, "DELETE FROM harga WHERE id_harga = '$id_harga'");
+		public function deleteHarga($idharga) {
+			$deletedata = mysqli_query($this->kon, "DELETE FROM harga WHERE idharga = '$idharga'");
 
 			if ($deletedata) {
 				return "Data sukses terhapus.";
@@ -20,9 +20,9 @@
 	}
 
 	$kelasController = new HargaController($kon);
-	if (isset($_GET['id_harga'])) {
-		$id_harga = $_GET['id_harga'];
-		$message = $kelasController->deleteHarga($id_harga);
+	if (isset($_GET['idharga'])) {
+		$idharga = $_GET['idharga'];
+		$message = $kelasController->deleteHarga($idharga);
 		echo $message;
 		header("Location: ../../dashboard/data/dashboardharga.php");
 	}

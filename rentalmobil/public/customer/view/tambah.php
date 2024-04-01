@@ -8,7 +8,7 @@
 		$id_customer = $customerController->tambahCustomer();
 
 		$data = [
-			'id_customer' => $id_customer,
+			'idcustomer' => $idcustomer,
       		'nama' => $_POST['nama'],
       		'alamat' => $_POST['alamat'],
       		'email' => $_POST['email'],
@@ -147,7 +147,7 @@
 				<table border="1">
 				<tr>
 					<td>ID Customer</td>
-					<td><input class="input_data_1" type="text" name="id_customer" value="<?php echo($customerController->tambahCustomer()) ?>" readonly></td>
+					<td><input class="input_data_1" type="text" name="idcustomer" value="<?php echo($customerController->tambahCustomer()) ?>" readonly></td>
 				</tr>
 				<tr>
 					<td>Nama Customer</td>

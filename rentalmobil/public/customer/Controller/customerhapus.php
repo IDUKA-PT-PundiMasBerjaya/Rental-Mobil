@@ -8,8 +8,8 @@
 			$this->kon = $connection;
 		}
 
-		public function deleteCustomer($id_customer) {
-			$deletedata = mysqli_query($this->kon, "DELETE FROM customer WHERE id_customer = '$id_customer'");
+		public function deleteCustomer($idcustomer) {
+			$deletedata = mysqli_query($this->kon, "DELETE FROM customer WHERE idcustomer = '$idcustomer'");
 
 			if ($deletedata) {
 				return "Data sukses terhapus.";
@@ -20,9 +20,9 @@
 	}
 
 	$kelasController = new CustomerController($kon);
-	if (isset($_GET['id_customer'])) {
-		$id_customer = $_GET['id_customer'];
-		$message = $kelasController->deleteCustomer($id_customer);
+	if (isset($_GET['idcustomer'])) {
+		$id_customer = $_GET['idcustomer'];
+		$message = $kelasController->deleteCustomer($idcustomer);
 		echo $message;
 		header("Location: ../../dashboard/data/dashboardcustomer.php");
 	}

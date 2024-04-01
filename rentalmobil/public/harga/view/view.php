@@ -1,6 +1,6 @@
 <?php  
 	include_once("../../../config/koneksi.php");
-	include_once("../Controller/viewdata.php");
+	include_once("../controller/viewdata.php");
 
 	$hargaController = new HargaController($kon);
 ?>
@@ -18,12 +18,12 @@
 			<tr>
 				<td>ID Harga </td>
 				<td>: </td>
-				<td><?php echo $id_harga; ?></td>
+				<td><?php echo $idharga; ?></td>
 			</tr>
 			<tr>
 				<td>Harga </td>
 				<td>: </td>
-				<td><?php echo $harga_per_hari; ?></td>
+				<td><?php echo $harga_perhari; ?></td>
 			</tr>
 		</table>
 	</form>

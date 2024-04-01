@@ -9,7 +9,7 @@
 		}
 
 		public function tambahMobil() {
-			$setAuto = mysqli_query($this->kon, "SELECT MAX(id_mobil) AS max_id FROM kendaraan");
+			$setAuto = mysqli_query($this->kon, "SELECT MAX(idmobil) AS max_id FROM kendaraan");
 			$result = mysqli_fetch_assoc($setAuto);
 			$max_id = $result['max_id'];
 
@@ -21,25 +21,25 @@
 		}
 
 		public function tambahDataMobil($data) {
-			$id_mobil = $data['id_mobil'];
-            $nama = $data['nama'];
+			$idmobil = $data['idmobil'];
+            $nama_mobil = $data['nama_mobil'];
             $merek = $data['merek'];
             $tahun = $data['tahun'];
-			$garasi_id_garasi = $data ['garasi_id_garasi'];
-            $harga_id_harga = $data['harga_id_harga'];
+			$idgarasi = $data ['garasi_idgarasi'];
+            $idharga = $data['harga_idharga'];
 
 			//Menambahkan Gambar
 			$ekstensi_diperbolehkan = array('jpeg', 'jpg', 'png');
-			$namagambar = $_FILES['gambar']['name'];
+			$namagambar = $_FILES['gambar_mobil']['name'];
 			$x = explode('.', $namagambar);
 			$ekstensi = strtolower(end($x));
-			$ukuran = $_FILES['gambar']['size'];
-			$file_temp = $_FILES['gambar']['tmp_name'];
+			$ukuran = $_FILES['gambar_mobil']['size'];
+			$file_temp = $_FILES['gambar_mobil']['tmp_name'];
 
 			if (in_array($ekstensi, $ekstensi_diperbolehkan) === true) {
 				if ($ukuran <= 2000000) {
 					move_uploaded_file($file_temp, '../aset/' . $namagambar);
-					$insertData = mysqli_query($this->kon, "INSERT INTO kendaraan (id_mobil, nama, merek, tahun, gambar, garasi_id_garasi, harga_id_harga) VALUES ('$id_mobil', '$nama', '$merek', '$tahun', '$namagambar', '$garasi_id_garasi', '$harga_id_harga')");
+					$insertData = mysqli_query($this->kon, "INSERT INTO kendaraan (idmobil, nama_mobil, merek, tahun, gambar_mobil, garasi_idgarasi, harga_idharga) VALUES ('$idmobil', '$nama_mobil', '$merek', '$tahun', '$namagambar', '$idgarasi', '$idharga')");
 
 					if ($insertData) {
 						return "Data berhasil disimpan.";

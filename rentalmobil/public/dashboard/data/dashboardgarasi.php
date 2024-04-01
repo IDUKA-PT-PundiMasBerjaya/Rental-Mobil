@@ -146,9 +146,9 @@
 			<?php  
 				if (isset($_GET['cari'])) {
 					$cari = $_GET['cari'];
-					$ambildata = mysqli_query($kon, "SELECT * FROM garasi WHERE id_garasi LIKE '%".$cari."%' OR tersedia LIKE '%".$cari."%'");
+					$ambildata = mysqli_query($kon, "SELECT * FROM garasi WHERE idgarasi LIKE '%".$cari."%' OR tersedia LIKE '%".$cari."%'");
 				} else {
-					$ambildata = mysqli_query($kon, "SELECT * FROM garasi ORDER BY id_garasi ASC ");
+					$ambildata = mysqli_query($kon, "SELECT * FROM garasi ORDER BY idgarasi ASC ");
 					$num = mysqli_num_rows($ambildata);
 				}
 			?>
@@ -161,12 +161,12 @@
 		<?php  
 			while ($userAmbilData = mysqli_fetch_array($ambildata)) {
 				echo "<tr>";
-					echo "<td class='border border-gray-400 px-4 py-2'>" . $id_garasi = $userAmbilData['id_garasi'] . "</td>";
+					echo "<td class='border border-gray-400 px-4 py-2'>" . $idgarasi = $userAmbilData['idgarasi'] . "</td>";
 					echo "<td class='border border-gray-400 px-4 py-2'>" . $tersedia = $userAmbilData['tersedia'] . "</td>";
 					echo "<td class='border border-gray-400 px-4 py-2'> 
-							<a href='../../garasi/View/view.php?id_garasi=" . $userAmbilData['id_garasi'] . "' class='btn btn-view'> View </a> | 
-							<a href='../../garasi/View/update.php?id_garasi=" . $userAmbilData['id_garasi'] . "' class='btn btn-edit'> Edit </a> |
-							<a href='../../garasi/Controller/garasihapus.php?id_garasi=" . $userAmbilData['id_garasi'] ."' class='btn btn-hapus'> Hapus </a>  
+							<a href='../../garasi/View/view.php?idgarasi=" . $userAmbilData['idgarasi'] . "' class='btn btn-view'> View </a> | 
+							<a href='../../garasi/View/update.php?idgarasi=" . $userAmbilData['idgarasi'] . "' class='btn btn-edit'> Edit </a> |
+							<a href='../../garasi/Controller/garasihapus.php?idgarasi=" . $userAmbilData['idgarasi'] ."' class='btn btn-hapus'> Hapus </a>  
 						</td>";
 				echo "</tr>";
 			}

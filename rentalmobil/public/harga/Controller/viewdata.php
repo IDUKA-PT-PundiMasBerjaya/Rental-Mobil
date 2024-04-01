@@ -8,18 +8,18 @@
 			$this->kon = $connection;
 		}
 
-		public function getHargaData($id_harga) {
-			$result =  mysqli_query($this->kon, "SELECT * FROM harga WHERE id_harga = '$id_harga'");
+		public function getHargaData($idharga) {
+			$result =  mysqli_query($this->kon, "SELECT * FROM harga WHERE idharga = '$idharga'");
 			return mysqli_fetch_array($result);
 		}
 	}
 
 	$kelasController = new HargaController($kon);
-	$id_harga = $_GET['id_harga'];
+	$idharga = $_GET['idharga'];
 	$mapelData = $kelasController->getHargaData($id_harga);
 
 	if ($mapelData) {
-		$id_harga = $mapelData['id_harga'];
-		$harga_per_hari = $mapelData['harga_per_hari'];
+		$idharga = $mapelData['idharga'];
+		$harga_perhari = $mapelData['harga_perhari'];
 	}
 ?>

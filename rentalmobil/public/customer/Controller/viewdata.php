@@ -8,18 +8,18 @@
 			$this->kon = $connection;
 		}
 
-		public function getCustomerData($id_customer) {
-			$result =  mysqli_query($this->kon, "SELECT * FROM customer WHERE id_customer = '$id_customer'");
+		public function getCustomerData($idcustomer) {
+			$result =  mysqli_query($this->kon, "SELECT * FROM customer WHERE idcustomer = '$idcustomer'");
 			return mysqli_fetch_array($result);
 		}
 	}
 
 	$kelasController = new CustomerController($kon);
-	$id_customer = $_GET['id_customer'];
-	$customerData = $kelasController->getCustomerData($id_customer);
+	$idcustomer = $_GET['id_customer'];
+	$customerData = $kelasController->getCustomerData($idcustomer);
 
 	if ($customerData) {
-		$id_customer = $customerData['id_customer'];
+		$idcustomer = $customerData['idcustomer'];
 		$nama = $customerData['nama'];
 		$alamat = $customerData['alamat'];
 		$email = $customerData['email'];

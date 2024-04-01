@@ -8,8 +8,8 @@
 			$this->kon = $connection;
 		}
 
-		public function deleteGarasi($id_garasi) {
-			$deletedata = mysqli_query($this->kon, "DELETE FROM garasi WHERE id_garasi = '$id_garasi'");
+		public function deleteGarasi($idgarasi) {
+			$deletedata = mysqli_query($this->kon, "DELETE FROM garasi WHERE idgarasi = '$idgarasi'");
 
 			if ($deletedata) {
 				return "Data sukses terhapus.";
@@ -20,9 +20,9 @@
 	}
 
 	$kelasController = new GarasiController($kon);
-	if (isset($_GET['id_garasi'])) {
-		$id_garasi = $_GET['id_garasi'];
-		$message = $kelasController->deleteGarasi($id_garasi);
+	if (isset($_GET['idgarasi'])) {
+		$idgarasi = $_GET['idgarasi'];
+		$message = $kelasController->deleteGarasi($idgarasi);
 		echo $message;
 		header("Location: ../../dashboard/data/dashboardgarasi.php");
 	}

@@ -8,7 +8,7 @@
 			$this->kon = $connection;
 		}
 		public function tambahCustomer() {
-			$setAuto = mysqli_query($this->kon, "SELECT MAX(id_customer) AS max_id FROM customer");
+			$setAuto = mysqli_query($this->kon, "SELECT MAX(idcustomer) AS max_id FROM customer");
 			$result = mysqli_fetch_assoc($setAuto);
 			$max_id = $result['max_id'];
 
@@ -20,13 +20,13 @@
 		}
 
 		public function tambahDataCustomer($data) {
-			$id_customer = $data['id_customer'];
+			$idcustomer = $data['id_customer'];
 			$nama = $data['nama'];
 			$alamat = $data['alamat'];
 			$email = $data['email'];
 			$no_hp = $data['no_hp'];
 
-					$insertData = mysqli_query($this->kon, "INSERT INTO customer(id_customer, nama, alamat, email, no_hp) VALUES ('$id_customer', '$nama', '$alamat', '$email', '$no_hp')");
+					$insertData = mysqli_query($this->kon, "INSERT INTO customer(idcustomer, nama, alamat, email, no_hp) VALUES ('$idcustomer', '$nama', '$alamat', '$email', '$no_hp')");
 
 					if ($insertData) {
 						return "Data berhasil disimpan.";

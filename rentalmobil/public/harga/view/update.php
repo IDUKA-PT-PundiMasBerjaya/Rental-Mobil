@@ -5,9 +5,9 @@
 	$hargaController = new HargaController($kon);
 
 	if (isset($_POST['update'])) {
-		$id_harga = $_POST['id_harga'];
-		$harga_per_hari = $_POST['harga_per_hari'];
-		$message = $hargaController->updateHarga($id_harga, $harga_per_hari);
+		$idharga = $_POST['idharga'];
+		$harga_perhari = $_POST['harga_perhari'];
+		$message = $hargaController->updateHarga($idharga, $harga_perhari);
 		echo $message;
 
 		header("Location: ../../dashboard/data/dashboardharga.php");
@@ -16,13 +16,13 @@
 	$id_harga = null;
 	$harga_per_hari = null;
 
-	if (isset($_GET['id_harga']) && is_numeric($_GET['id_harga'])) {
-		$id_harga = $_GET['id_harga'];
-		$result = $hargaController->getDataHarga($id_harga);
+	if (isset($_GET['idharga']) && is_numeric($_GET['idharga'])) {
+		$idharga = $_GET['idharga'];
+		$result = $hargaController->getDataHarga($idharga);
 
 		if ($result) {
-			$id_harga = $result['id_harga'];
-			$harga_per_hari = $result['harga_per_hari'];
+			$idharga = $result['idharga'];
+			$harga_perhari = $result['harga_perhari'];
 		} else{
 			echo "ID Tidak Valid.";
 		}
@@ -163,15 +163,15 @@
 		<table border="1">
 			<tr>
 				<td>ID</td>
-				<td><input class="input_data_1" type="text" name="id_harga" value="<?php echo $id_harga ?>" readonly></td>
+				<td><input class="input_data_1" type="text" name="idharga" value="<?php echo $idharga ?>" readonly></td>
 			</tr>
 			<tr>
 				<td>Harga</td>
-				<td><input class="input" type="text" name="harga_per_hari" value="<?php echo $harga_per_hari ?>"></td>
+				<td><input class="input" type="text" name="harga_perhari" value="<?php echo $harga_perhari ?>"></td>
 			</tr>
 		</table>
 		<div class="update-button">
-            <input type="hidden" name="id_harga" value="<?php echo $id_harga; ?>">
+            <input type="hidden" name="idharga" value="<?php echo $idharga; ?>">
             <input type="submit" name="update" value="Update">
         </div>
 	</form>

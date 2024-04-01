@@ -8,17 +8,17 @@
 			$this->kon = $connection;
 		}
 
-		public function deleteMobil($id_mobil) {
-			$result = mysqli_query($this->kon, "SELECT gambar FROM kendaraan WHERE id_mobil = '$id_mobil'");
+		public function deleteMobil($idmobil) {
+			$result = mysqli_query($this->kon, "SELECT gambar_mobil FROM kendaraan WHERE idmobil = '$idmobil'");
 			$row = mysqli_fetch_assoc($result);
-			$gambar = $row['gambar'];
+			$gambar_mobil = $row['gambar_mobil'];
 
-			$deletedata = mysqli_query($this->kon, "DELETE FROM kendaraan WHERE id_mobil = '$id_mobil'");
+			$deletedata = mysqli_query($this->kon, "DELETE FROM kendaraan WHERE idmobil = '$idmobil'");
 
 			if ($deletedata) {
 				$gambar_dir = "../aset/";
-				if ($gambar && file_exists($gambar_dir . $gambar)) {
-					unlink ($gambar_dir . $gambar);
+				if ($gambar_mobil && file_exists($gambar_dir . $gambar_mobil)) {
+					unlink ($gambar_dir . $gambar_mobil);
 				}
 				return "Data sukses terhapus.";
 			} else {
@@ -28,9 +28,9 @@
 	}
 
 	$kelasController = new MobilController($kon);
-	if (isset($_GET['id_mobil'])) {
-		$id_mobil = $_GET['id_mobil'];
-		$message = $kelasController->deleteMobil($id_mobil);
+	if (isset($_GET['idmobil'])) {
+		$idmobil = $_GET['idmobil'];
+		$message = $kelasController->deleteMobil($idmobil);
 		echo $message;
 		header("Location: ../../dashboard/data/dashboardkendaraan.php");
 	}

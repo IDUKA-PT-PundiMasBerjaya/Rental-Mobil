@@ -9,7 +9,7 @@
 		}
 
 		public function tambahHarga() {
-			$setAuto = mysqli_query($this->kon, "SELECT MAX(id_harga) AS max_id FROM harga");
+			$setAuto = mysqli_query($this->kon, "SELECT MAX(idharga) AS max_id FROM harga");
 			$result = mysqli_fetch_assoc($setAuto);
 			$max_id = $result['max_id'];
 
@@ -21,10 +21,10 @@
 		}
 
 		public function tambahDataHarga($data) {
-			$id_harga = $data['id_harga'];
-			$harga_per_hari = $data['harga_per_hari'];
+			$idharga = $data['idharga'];
+			$harga_perhari = $data['harga_per_hari'];
 
-					$insertData = mysqli_query($this->kon, "INSERT INTO harga (id_harga, harga_per_hari) VALUES ('$id_harga', '$harga_per_hari')");
+					$insertData = mysqli_query($this->kon, "INSERT INTO harga (idharga, harga_perhari) VALUES ('$idharga', '$harga_perhari')");
 
 					if ($insertData) {
 						return "Data berhasil disimpan.";

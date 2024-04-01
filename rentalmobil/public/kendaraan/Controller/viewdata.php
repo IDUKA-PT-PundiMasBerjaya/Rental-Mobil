@@ -8,22 +8,23 @@
 			$this->kon = $connection;
 		}
 
-		public function getMobilData($id_mobil) {
-			$result =  mysqli_query($this->kon, "SELECT * FROM kendaraan WHERE id_mobil = '$id_mobil'");
+		public function getMobilData($idmobil) {
+			$result =  mysqli_query($this->kon, "SELECT * FROM kendaraan WHERE idmobil = '$idmobil'");
 			return mysqli_fetch_array($result);
 		}
 	}
 
 	$kelasController = new MobilController($kon);
-	$id_mobil = $_GET['id_mobil'];
+	$idmobil = $_GET['idmobil'];
 	$mobilData = $kelasController->getMobilData($id_mobil);
 
 	if ($mobilData) {
-		$id_mobil = $mobilData['id_mobil'];
-		$merek = $mobilData['merk'];
+		$idmobil = $mobilData['idmobil'];
+		$nama_mobil = $mobilData['nama_mobil'];
+		$merek = $mobilData['merek'];
 		$tahun = $mobilData['tahun'];
-		$gambar = $mobilData['gambar'];
-		$garasi_id_garasi = $mobilData['garasi_id_garasi'];
-		$harga_id_harga = $mobilData['harga_id_harga'];
+		$gambar_mobil = $mobilData['gambar_mobil'];
+		$garasi_idgarasi = $mobilData['garasi_idgarasi'];
+		$harga_idharga = $mobilData['harga_idharga'];
 	}
 ?>

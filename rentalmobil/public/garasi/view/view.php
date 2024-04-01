@@ -1,29 +1,29 @@
 <?php  
 	include_once("../../../config/koneksi.php");
-	include_once("../Controller/viewdata.php");
+	include_once("../controller/viewdata.php");
 
-	$hargaController = new HargaController($kon);
+	$garasiController = new GarasiController($kon);
 ?>
 
 <!DOCTYPE html>
 <html>
 <head>
-	<title>View Data Harga </title>
+	<title>View Data Garasi </title>
 </head>
 <body>
-	<a href="../../dashboard/data/dashboardharga.php">Home</a>
+	<a href="../../dashboard/data/dashboardgarasi.php">Home</a>
 	<br><br>
 	<form name="update_data" method="post" action="view.php">
 		<table border="0">
 			<tr>
-				<td>ID Harga </td>
+				<td>ID Garasi </td>
 				<td>: </td>
-				<td><?php echo $id_harga; ?></td>
+				<td><?php echo $idgarasi; ?></td>
 			</tr>
 			<tr>
-				<td>Harga </td>
+				<td>Tersedia </td>
 				<td>: </td>
-				<td><?php echo $harga_per_hari; ?></td>
+				<td><?php echo $tersedia; ?></td>
 			</tr>
 		</table>
 	</form>

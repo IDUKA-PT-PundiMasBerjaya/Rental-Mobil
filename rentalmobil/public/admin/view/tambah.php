@@ -7,10 +7,10 @@ $adminController = new AdminController($kon);
 $message = "";
 
 if (isset($_POST['submit'])) {
-    $id_admin = $adminController->tambahAdmin();
+    $id = $adminController->tambahAdmin();
 
     $data = [
-        'id_admin' => $id_admin,
+        'id' => $id,
         'username' => $_POST['username'],
         'password' => $_POST['password'],
     ];

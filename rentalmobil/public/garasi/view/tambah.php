@@ -1,14 +1,14 @@
 <?php  
 	include_once("../../../config/koneksi.php");
-	include_once("../Controller/garasitambah.php");
+	include_once("../controller/garasitambah.php");
  
 	$garasiController = new GarasiController($kon);
 
 	if (isset($_POST['submit'])) {
-		$id_garasi = $garasiController->tambahGarasi();
+		$idgarasi = $garasiController->tambahGarasi();
 
 		$data = [
-			'id_garasi' => $id_garasi,
+			'idgarasi' => $idgarasi,
       		'tersedia' => $_POST['tersedia'],
 		];
 
@@ -141,7 +141,7 @@
 			<table border="1">
 			<tr>
 					<td>ID Garasi</td>
-					<td><input class="input_data_1" type="text" name="id_garasi" value="<?php echo($garasiController->tambahGarasi()) ?>" readonly></td>
+					<td><input class="input_data_1" type="text" name="idgarasi" value="<?php echo($garasiController->tambahGarasi()) ?>" readonly></td>
 				</tr>
 			<tr>
 				<td>Tersedia</td>

@@ -1,27 +1,27 @@
 <?php  
 	include_once("../../../config/koneksi.php");
-	include_once("../Controller/garasiupdate.php");
+	include_once("../controller/garasiupdate.php");
 
 	$garasiController = new GarasiController($kon);
 
 	if (isset($_POST['update'])) {
-		$id_garasi = $_POST['id_garasi'];
+		$idgarasi = $_POST['idgarasi'];
 		$tersedia = $_POST['tersedia'];
-		$message = $garasiController->updateGarasi($id_garasi, $tersedia);
+		$message = $garasiController->updateGarasi($idgarasi, $tersedia);
 		echo $message;
 
 		header("Location: ../../dashboard/data/dashboardgarasi.php");
 	}
 
-	$id_garasi = null;
+	$idgarasi = null;
 	$tersedia = null;
 
-	if (isset($_GET['id_garasi']) && is_numeric($_GET['id_garasi'])) {
-		$id_garasi = $_GET['id_garasi'];
-		$result = $garasiController->getDataGarasi($id_garasi);
+	if (isset($_GET['idgarasi']) && is_numeric($_GET['idgarasi'])) {
+		$idgarasi = $_GET['idgarasi'];
+		$result = $garasiController->getDataGarasi($idgarasi);
 
 		if ($result) {
-			$id_garasi = $result['id_garasi'];
+			$idgarasi = $result['idgarasi'];
 			$tersedia = $result['tersedia'];
 		} else{
 			echo "ID Tidak Valid.";
@@ -163,7 +163,7 @@
 		<table border="1">
 			<tr>
 				<td>ID Garasi</td>
-				<td><input class="input_data_1" type="text" name="id_garasi" value="<?php echo $id_garasi ?>" readonly></td>
+				<td><input class="input_data_1" type="text" name="idgarasi" value="<?php echo $idgarasi ?>" readonly></td>
 			</tr>
 			<tr>
 				<td>Tersedia</td>
@@ -171,7 +171,7 @@
 			</tr>
 		</table>
 		<div class="update-button">
-            <input type="hidden" name="id_garasi" value="<?php echo $id_garasi; ?>">
+            <input type="hidden" name="garasi" value="<?php echo $idgarasi; ?>">
             <input type="submit" name="update" value="Update">
         </div>
 	</form>

@@ -18,12 +18,12 @@
 			<tr>
 				<td>ID Mobil </td>
 				<td>: </td>
-				<td><?php echo $id_mobil; ?></td>
+				<td><?php echo $idmobil; ?></td>
 			</tr>
 			<tr>
 				<td>Nama Mobil </td>
 				<td>: </td>
-				<td><?php echo $nama; ?></td>
+				<td><?php echo $nama_mobil; ?></td>
 			</tr>
 			<tr>
 				<td>Merek </td>
@@ -38,17 +38,17 @@
 			<tr>
 				<td>gambar </td>
 				<td>: </td>
-				<td><?php echo $gambar; ?></td>
+				<td><?php echo $gambar_mobil; ?></td>
 			</tr>
 			<tr>
 				<td>Tersedia </td>
 				<td>: </td>
-				<td><?php echo $garasi_id_garasi; ?></td>
+				<td><?php echo $garasi_idgarasi; ?></td>
 			</tr>
 			<tr>
 				<td>Harga Mobil</td>
 				<td>: </td>
-				<td><?php echo $harga_id_harga; ?></td>
+				<td><?php echo $harga_idharga; ?></td>
 			</tr>
 		</table>
 	</form>

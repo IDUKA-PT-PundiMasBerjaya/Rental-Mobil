@@ -3,12 +3,12 @@
 
 	session_start();
 
-	if (!isset($_SESSION["id_admin"])) {
+	if (!isset($_SESSION["id"])) {
 		header("Location: ../../login.php");
 		exit();
 	}
 
-	$id_admin = $_SESSION["id_admin"];
+	$id = $_SESSION["id"];
 	$username = $_SESSION["username"];
 ?>
 

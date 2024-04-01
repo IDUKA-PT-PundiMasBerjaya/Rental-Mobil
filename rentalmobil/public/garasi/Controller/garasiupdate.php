@@ -8,8 +8,8 @@
 			$this->kon = $connection;
 		}
 
-		public function updateGarasi($id_garasi, $tersedia) {
-			$result = mysqli_query($this->kon, "UPDATE garasi SET tersedia = '$tersedia' WHERE id_garasi = '$id_garasi'");
+		public function updateGarasi($idgarasi, $tersedia) {
+			$result = mysqli_query($this->kon, "UPDATE garasi SET tersedia = '$tersedia' WHERE idgarasi = '$idgarasi'");
 
 			if ($result) {
 				return "Sukses meng-update data.";
@@ -18,8 +18,8 @@
 			}
 		}
 
-		public function getDataGarasi($id_garasi) {
-			$sql = "SELECT * FROM garasi WHERE id_garasi = '$id_garasi'";
+		public function getDataGarasi($idgarasi) {
+			$sql = "SELECT * FROM garasi WHERE idgarasi = '$idgarasi'";
 			$ambildata = $this->kon->query($sql);
 
 			if ($result = mysqli_fetch_array($ambildata)) {

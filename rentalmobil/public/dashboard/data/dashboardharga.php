@@ -134,8 +134,8 @@
 	<h1> Data Harga </h1>
 		<nav>
 			<div>
-				<a href="../../harga/View/tambah.php" class="btn bg-blue-500 text-white">Tambah Data Harga</a>
-				<a href="../../harga/View/cetak.php" target="_blank" class="btn bg-blue-500 text-white">Cetak</a>
+				<a href="../../harga/view/tambah.php" class="btn bg-blue-500 text-white">Tambah Data Harga</a>
+				<a href="../../harga/view/cetak.php" target="_blank" class="btn bg-blue-500 text-white">Cetak</a>
 			</div>
             <div>
                 <a href="../dashboard.php" class="btn bg-blue-500 text-white">Home</a>
@@ -146,9 +146,9 @@
 			<?php  
 				if (isset($_GET['cari'])) {
 					$cari = $_GET['cari'];
-					$ambildata = mysqli_query($kon, "SELECT * FROM harga WHERE id_harga LIKE '%".$cari."%' OR harga_per_hari LIKE '%".$cari."%'");
+					$ambildata = mysqli_query($kon, "SELECT * FROM harga WHERE idharga LIKE '%".$cari."%' OR harga_perhari LIKE '%".$cari."%'");
 				} else {
-					$ambildata = mysqli_query($kon, "SELECT * FROM harga ORDER BY id_harga ASC ");
+					$ambildata = mysqli_query($kon, "SELECT * FROM harga ORDER BY idharga ASC ");
 					$num = mysqli_num_rows($ambildata);
 				}
 			?>
@@ -161,12 +161,12 @@
 		<?php  
 			while ($userAmbilData = mysqli_fetch_array($ambildata)) {
 				echo "<tr>";
-					echo "<td class='border border-gray-400 px-4 py-2'>" . $id_harga = $userAmbilData['id_harga'] . "</td>";
-					echo "<td class='border border-gray-400 px-4 py-2'>Rp " . number_format($userAmbilData['harga_per_hari'], 0, ',', '.') . "</td>";
+					echo "<td class='border border-gray-400 px-4 py-2'>" . $id_harga = $userAmbilData['idharga'] . "</td>";
+					echo "<td class='border border-gray-400 px-4 py-2'>Rp " . number_format($userAmbilData['harga_perhari'], 0, ',', '.') . "</td>";
 					echo "<td class='border border-gray-400 px-4 py-2'> 
-							<a href='../../harga/View/view.php?id_harga=" . $userAmbilData['id_harga'] . "' class='btn btn-view'> View </a> | 
-							<a href='../../harga/View/update.php?id_harga=" . $userAmbilData['id_harga'] . "' class='btn btn-edit'> Edit </a> |
-							<a href='../../harga/Controller/hargahapus.php?id_harga=" . $userAmbilData['id_harga'] ."' class='btn btn-hapus'> Hapus </a>  
+							<a href='../../harga/view/view.php?idharga=" . $userAmbilData['idharga'] . "' class='btn btn-view'> View </a> | 
+							<a href='../../harga/iew/update.php?idharga=" . $userAmbilData['idharga'] . "' class='btn btn-edit'> Edit </a> |
+							<a href='../../harga/controller/hargahapus.php?idharga=" . $userAmbilData['idharga'] ."' class='btn btn-hapus'> Hapus </a>  
 						</td>";
 				echo "</tr>";
 			}

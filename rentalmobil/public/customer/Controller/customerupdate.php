@@ -8,8 +8,8 @@
 			$this->kon = $connection;
 		}
 
-		public function updatecustomer($id_customer, $nama, $alamat, $email, $no_hp) {
-			$result = mysqli_query($this->kon, "UPDATE customer SET nama = '$nama', alamat = '$alamat',email = '$email', no_hp = '$no_hp' WHERE id_customer = '$id_customer'");
+		public function updatecustomer($idcustomer, $nama, $alamat, $email, $no_hp) {
+			$result = mysqli_query($this->kon, "UPDATE customer SET nama = '$nama', alamat = '$alamat',email = '$email', no_hp = '$no_hp' WHERE idcustomer = '$idcustomer'");
 
 			if ($result) {
 				return "Sukses meng-update data.";
@@ -18,8 +18,8 @@
 			}
 		}
 
-		public function getDataCustomer($id_customer) {
-			$sql = "SELECT * FROM customer WHERE id_customer = '$id_customer'";
+		public function getDataCustomer($idcustomer) {
+			$sql = "SELECT * FROM customer WHERE idcustomer = '$idcustomer'";
 			$ambildata = $this->kon->query($sql);
 
 			if ($result = mysqli_fetch_array($ambildata)) {

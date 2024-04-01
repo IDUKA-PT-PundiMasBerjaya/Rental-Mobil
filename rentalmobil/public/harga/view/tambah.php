@@ -1,8 +1,6 @@
 <?php  
 	include_once("../../../config/koneksi.php");
-	include_once("../Controller/hargatambah.php");
- 
-	$hargaController = new HargaController($kon);
+	include_once("../controller/hargatambah.php");
 
 	$hargaController = new hargaController($kon);
 
@@ -10,8 +8,8 @@
 		$id_harga = $hargaController->tambahHarga();
 
 		$data = [
-			'id_harga' => $id_harga,
-      		'harga_per_hari' => $_POST['harga_per_hari'],
+			'idharga' => $idharga,
+      		'harga_perhari' => $_POST['harga_perhari'],
 		];
 
 		$message = $hargaController->tambahDataHarga($data);
@@ -143,11 +141,11 @@
 			<table border="1">
 			<tr>
 					<td>ID Harga</td>
-					<td><input class="input_data_1" type="text" name="id_harga" value="<?php echo($hargaController->tambahHarga()) ?>" readonly></td>
+					<td><input class="input_data_1" type="text" name="idharga" value="<?php echo($hargaController->tambahHarga()) ?>" readonly></td>
 				</tr>
 			<tr>
 				<td>Harga</td>
-				<td><input class="input" type="text" name="harga_per_hari" required></td>
+				<td><input class="input" type="text" name="harga_perhari" required></td>
 			</tr>
 		</table>
 		<input type="submit" name="submit" value="Tambah Data">

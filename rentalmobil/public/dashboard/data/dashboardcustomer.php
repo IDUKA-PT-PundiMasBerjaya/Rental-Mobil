@@ -69,7 +69,7 @@
         td {
             font-size: 16px;
         }
-		/* Style untuk sel yang sejajar dengan ID Buku */
+		/* Style untuk sel yang sejajar dengan ID Customer */
         th:first-child,
         th:nth-child(2),
         th:nth-child(3),
@@ -149,9 +149,9 @@
 			<?php  
 				if (isset($_GET['cari'])) {
 					$cari = $_GET['cari'];
-					$ambildata = mysqli_query($kon, "SELECT * FROM customer WHERE id_customer LIKE '%".$cari."%' OR nama LIKE '%".$cari."%'");
+					$ambildata = mysqli_query($kon, "SELECT * FROM customer WHERE idcustomer LIKE '%".$cari."%' OR nama LIKE '%".$cari."%'");
 				} else {
-					$ambildata = mysqli_query($kon, "SELECT * FROM customer ORDER BY id_customer ASC ");
+					$ambildata = mysqli_query($kon, "SELECT * FROM customer ORDER BY idcustomer ASC ");
 					$num = mysqli_num_rows($ambildata);
 				}
 			?>
@@ -167,15 +167,15 @@
 		<?php  
 			while ($userAmbilData = mysqli_fetch_array($ambildata)) {
 				echo "<tr>";
-					echo "<td class='border border-gray-400 px-4 py-2'>" . $id_customer = $userAmbilData['id_customer'] . "</td>";
+					echo "<td class='border border-gray-400 px-4 py-2'>" . $idcustomer = $userAmbilData['idcustomer'] . "</td>";
 					echo "<td class='border border-gray-400 px-4 py-2'>" . $nama = $userAmbilData['nama'] . "</td>";
 					echo "<td class='border border-gray-400 px-4 py-2'>" . $alamat = $userAmbilData['alamat'] . "</td>";
 					echo "<td class='border border-gray-400 px-4 py-2'>" . $email = $userAmbilData['email'] . "</td>";
                     echo "<td class='border border-gray-400 px-4 py-2'>" . $no_hp = $userAmbilData['no_hp'] . "</td>";
 					echo "<td class='border border-gray-400 px-4 py-2'> 
-							<a href='../../customer/view/view.php?id_customer=" . $userAmbilData['id_customer'] . "' class='btn btn-view'> View </a> | 
-							<a href='../../customer/view/update.php?id_customer=" . $userAmbilData['id_customer'] . "' class='btn btn-edit'> Edit </a> |
-							<a href='../../customer/Controller/customerhapus.php?id_customer=" . $userAmbilData['id_customer'] ."' class='btn btn-hapus'> Hapus </a>  
+							<a href='../../customer/view/view.php?idcustomer=" . $userAmbilData['idcustomer'] . "' class='btn btn-view'> View </a> | 
+							<a href='../../customer/view/update.php?idcustomer=" . $userAmbilData['idcustomer'] . "' class='btn btn-edit'> Edit </a> |
+							<a href='../../customer/Controller/customerhapus.php?idcustomer=" . $userAmbilData['idcustomer'] ."' class='btn btn-hapus'> Hapus </a>  
 						</td>";
 				echo "</tr>";
 			}

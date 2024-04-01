@@ -9,7 +9,7 @@
         }
 
         public function tambahAdmin() {
-            $setAuto = mysqli_query($this->kon, "SELECT MAX(id_admin) AS max_id FROM admin");
+            $setAuto = mysqli_query($this->kon, "SELECT MAX(id) AS max_id FROM admin");
             $result = mysqli_fetch_assoc($setAuto);
             $max_id = $result['max_id'];
 
@@ -21,11 +21,11 @@
         } 
 
         public function tambahDataAdmin($data) {
-            $id_admin = $data['id_admin'];
+            $id = $data['id'];
             $username = $data['username'];
             $password = $data['password'];
 
-            $insertData = mysqli_query($this->kon, "INSERT INTO Admin (id_admin, username, password) VALUES('$id_admin', '$username', '$password')");
+            $insertData = mysqli_query($this->kon, "INSERT INTO Admin (id, username, password) VALUES('$id', '$username', '$password')");
             
             if ($insertData) {
                 return "Data berhasil disimpan ";

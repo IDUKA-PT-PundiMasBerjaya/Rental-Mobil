@@ -10,13 +10,13 @@
         $username = $_POST['username'];
         $password = $_POST['password'];
 
-        $sql = "SELECT id_admin, username, password FROM Admin WHERE username = '$username' AND password = '$password'";
+        $sql = "SELECT id, username, password FROM Admin WHERE username = '$username' AND password = '$password'";
         $result = $kon->query($sql);
 
         if($result->num_rows == 1) {
             $row = $result->fetch_assoc();
 
-            $_SESSION['id_admin'] = $row['id_admin'];
+            $_SESSION['id'] = $row['id'];
             $_SESSION['username'] = $row['username'];
 
             header("Location: public/dashboard/dashboard.php");

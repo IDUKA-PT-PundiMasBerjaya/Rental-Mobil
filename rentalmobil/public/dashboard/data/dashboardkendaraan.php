@@ -142,8 +142,8 @@
 	<h1> Mobil Yang Tersedia </h1>
 		<nav>
 			<div>
-				<a href="../../kendaraan/View/tambah.php" class="btn bg-blue-500 text-white">Tambah Data Kendaraan</a>
-				<a href="../../kendaraan/View/cetak.php" target="_blank" class="btn bg-blue-500 text-white">Cetak</a>
+				<a href="../../kendaraan/view/tambah.php" class="btn bg-blue-500 text-white">Tambah Data Kendaraan</a>
+				<a href="../../kendaraan/view/cetak.php" target="_blank" class="btn bg-blue-500 text-white">Cetak</a>
 			</div>
             <div>
                 <a href="../dashboard.php" class="btn bg-blue-500 text-white">Home</a>
@@ -154,17 +154,17 @@
 			<?php  
 				if (isset($_GET['cari'])) {
 					$cari = $_GET['cari'];
-					$ambildata = mysqli_query($kon, "SELECT kendaraan.*, harga.harga_per_hari AS harga_mobil, garasi.tersedia AS stok
+					$ambildata = mysqli_query($kon, "SELECT kendaraan.*, harga.harga_perhari AS harga_mobil, garasi.tersedia AS stok
                                         FROM kendaraan
-                                        INNER JOIN harga ON kendaraan.harga_id_harga = harga.id_harga
-                                        INNER JOIN garasi ON kendaraan.garasi_id_garasi = garasi.id_garasi
-                                        WHERE kendaraan.id_mobil LIKE '%".$cari."%' OR kendaraan.nama LIKE '%".$cari."%'");
+                                        INNER JOIN harga ON kendaraan.harga_idharga = harga.idharga
+                                        INNER JOIN garasi ON kendaraan.garasi_idgarasi = garasi.idgarasi
+                                        WHERE kendaraan.idmobil LIKE '%".$cari."%' OR kendaraan.nama_mobil LIKE '%".$cari."%' OR harga.harga LIKE '%".$cari."%' OR garasi.tersedia LIKE '%".$cari."%'");
 				} else {
-					$ambildata = mysqli_query($kon, "SELECT kendaraan.*, harga.harga_per_hari AS harga_mobil, garasi.tersedia AS stok
+					$ambildata = mysqli_query($kon, "SELECT kendaraan.*, harga.harga_perhari AS harga_mobil, garasi.tersedia AS stok
                                           FROM kendaraan
-                                          INNER JOIN harga ON kendaraan.harga_id_harga = harga.id_harga
-                                          INNER JOIN garasi ON kendaraan.garasi_id_garasi = garasi.id_garasi
-                                          ORDER BY kendaraan.id_mobil ASC ");
+                                          INNER JOIN harga ON kendaraan.harga_idharga = harga.idharga
+                                          INNER JOIN garasi ON kendaraan.garasi_idgarasi = garasi.idgarasi
+                                          ORDER BY kendaraan.idmobil ASC ");
 					$num = mysqli_num_rows($ambildata);
 				}
 			?>
@@ -176,36 +176,29 @@
             <th class="border border-gray-400 px-4 py-2 text-center">Gambar</th>
             <th class="border border-gray-400 px-4 py-2 text-center">Tersedia</th>
             <th class="border border-gray-400 px-4 py-2 text-center">Harga Mobil</th>
-            <th class="border border-gray-400 px-4 py-2 text-center">Total Harga Mobil</th>
             <th class="border border-gray-400 px-4 py-2 text-center">Aksi</th>
         </tr>
 		<tbody>
-		<?php
-            $totalHargaSemuaMobil = 0; // Inisialisasi variabel total harga semua mobil  
+		<?php  
 			while ($userAmbilData = mysqli_fetch_array($ambildata)) {
 				echo "<tr>";
-                    echo "<td class='border border-gray-400 px-4 py-2'>" . $id_mobil = $userAmbilData['id_mobil'] . "</td>";
-                    echo "<td class='border border-gray-400 px-4 py-2'>" . $nama = $userAmbilData['nama'] . "</td>";
+                    echo "<td class='border border-gray-400 px-4 py-2'>" . $idmobil = $userAmbilData['idmobil'] . "</td>";
+                    echo "<td class='border border-gray-400 px-4 py-2'>" . $nama_mobil = $userAmbilData['nama_mobil'] . "</td>";
                     echo "<td class='border border-gray-400 px-4 py-2'>" . $merek =$userAmbilData['merek'] . "</td>";
                     echo "<td class='border border-gray-400 px-4 py-2'>" . $tahun = $userAmbilData['tahun'] . "</td>";
                     echo "<td class='border border-gray-400 px-4 py-2'>";
-                        $data = mysqli_query($kon, "SELECT * FROM kendaraan WHERE id_mobil = '{$userAmbilData['id_mobil']}'");
+                        $data = mysqli_query($kon, "SELECT * FROM kendaraan WHERE idmobil = '{$userAmbilData['idmobil']}'");
                         while ($row = mysqli_fetch_array($data)) {
-                            echo "<a href='javascript:void(0);' onclick=\"window.open(../../kendaraan/aset/{$row['gambar']}', '_blank');\">
-                                    <img src='../../kendaraan/aset/{$row['gambar']}' alt='Gambar Mobil' width='240' height='300'></a>";
+                            echo "<a href='javascript:void(0);' onclick=\"window.open(../../kendaraan/aset/{$row['gambar_mobil']}', '_blank');\">
+                                    <img src='../../kendaraan/aset/{$row['gambar_mobil']}' alt='Gambar Mobil' width='240' height='300'></a>";
                         }
                         "</td>";
-                    echo "<td>" . $userAmbilData['stok'] . "</td>";
-                    echo "<td>Harga 1 Mobil = Rp. " . number_format($userAmbilData['harga_mobil'], 0, ',', '.') . "</td>";
-                    // Menghitung total harga per mobil
-                    $totalHargaPerMobil = $userAmbilData['harga_mobil'] * $userAmbilData['stok'];
-                    // Menambahkan total harga per mobil ke total harga semua mobil
-                    $totalHargaSemuaMobil += $totalHargaPerMobil;
-                    echo "<td>Rp. " . number_format($totalHargaPerMobil, 0, ',', '.') . "</td>"; // Menampilkan total harga per mobil
+                    echo "<td>" . $tersedia = $userAmbilData['stok'] . "</td>";
+                    echo "<td>Harga 1 Mobil = Rp. " . $harga_perhari = $userAmbilData['harga_mobil'] . "</td>";
 					echo "<td>
-							<a href='../../kendaraan/View/view.php?id_mobil=" . $userAmbilData['id_mobil'] . "' class='btn btn-view'> View </a> | 
-							<a href='../../kendaraan/View/update.php?id_mobil=" . $userAmbilData['id_mobil'] . "' class='btn btn-edit'> Edit </a> | 
-							<a href='../../kendaraan/Controller/mobilhapus.php?id_mobil=" . $userAmbilData['id_mobil'] . "' class='btn btn-hapus'> Hapus </a> 
+							<a href='../../kendaraan/view/view.php?idmobil=" . $userAmbilData['idmobil'] . "' class='btn btn-view'> View </a> | 
+							<a href='../../kendaraan/view/update.php?idmobil=" . $userAmbilData['idmobil'] . "' class='btn btn-edit'> Edit </a> | 
+							<a href='../../kendaraan/controller/mobilhapus.php?idmobil=" . $userAmbilData['idmobil'] . "' class='btn btn-hapus'> Hapus </a> 
 						</td>";
 				echo "</tr>";
 			}

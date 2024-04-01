@@ -8,18 +8,18 @@
 			$this->kon = $connection;
 		}
 
-		public function getGarasiData($id_garasi) {
-			$result =  mysqli_query($this->kon, "SELECT * FROM garasi WHERE id_garasi = '$id_garasi'");
+		public function getGarasiData($idgarasi) {
+			$result =  mysqli_query($this->kon, "SELECT * FROM garasi WHERE idgarasi = '$idgarasi'");
 			return mysqli_fetch_array($result);
 		}
 	}
 
 	$kelasController = new GarasiController($kon);
-	$id_garasi = $_GET['id_garasi'];
-	$mapelData = $kelasController->getGarasiData($id_garasi);
+	$idgarasi = $_GET['idgarasi'];
+	$garasiData = $kelasController->getGarasiData($idgarasi);
 
-	if ($mapelData) {
-		$id_garasi = $mapelData['id_garasi'];
-		$tersedia = $mapelData['tersedia'];
+	if ($garasiData) {
+		$idgarasi = $garasiData['idgarasi'];
+		$tersedia = $garasiData['tersedia'];
 	}
 ?>
