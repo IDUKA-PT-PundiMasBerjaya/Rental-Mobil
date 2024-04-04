@@ -21,7 +21,7 @@
 				<td><?php echo $idcustomer; ?></td>
 			</tr>
 			<tr>
-				<td>Nama Guru </td>
+				<td>Nama Customer </td>
 				<td>: </td>
 				<td><?php echo $nama; ?></td>
 			</tr>

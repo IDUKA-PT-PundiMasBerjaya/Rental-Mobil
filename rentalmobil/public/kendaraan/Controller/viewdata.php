@@ -16,7 +16,7 @@
 
 	$kelasController = new MobilController($kon);
 	$idmobil = $_GET['idmobil'];
-	$mobilData = $kelasController->getMobilData($id_mobil);
+	$mobilData = $kelasController->getMobilData($idmobil);
 
 	if ($mobilData) {
 		$idmobil = $mobilData['idmobil'];
@@ -24,7 +24,7 @@
 		$merek = $mobilData['merek'];
 		$tahun = $mobilData['tahun'];
 		$gambar_mobil = $mobilData['gambar_mobil'];
-		$garasi_idgarasi = $mobilData['garasi_idgarasi'];
-		$harga_idharga = $mobilData['harga_idharga'];
+		$tersedia = $mobilData['tersedia'];
+		$idharga = $mobilData['harga_idharga'];
 	}
 ?>

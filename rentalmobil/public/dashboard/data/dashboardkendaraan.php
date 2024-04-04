@@ -154,16 +154,14 @@
 			<?php  
 				if (isset($_GET['cari'])) {
 					$cari = $_GET['cari'];
-					$ambildata = mysqli_query($kon, "SELECT kendaraan.*, harga.harga_perhari AS harga_mobil, garasi.tersedia AS stok
+					$ambildata = mysqli_query($kon, "SELECT kendaraan.*, harga.harga_perhari AS harga_mobil
                                         FROM kendaraan
                                         INNER JOIN harga ON kendaraan.harga_idharga = harga.idharga
-                                        INNER JOIN garasi ON kendaraan.garasi_idgarasi = garasi.idgarasi
-                                        WHERE kendaraan.idmobil LIKE '%".$cari."%' OR kendaraan.nama_mobil LIKE '%".$cari."%' OR harga.harga LIKE '%".$cari."%' OR garasi.tersedia LIKE '%".$cari."%'");
+                                        WHERE kendaraan.idmobil LIKE '%".$cari."%' OR kendaraan.nama_mobil LIKE '%".$cari."%' OR harga.harga LIKE '%".$cari."%'");
 				} else {
-					$ambildata = mysqli_query($kon, "SELECT kendaraan.*, harga.harga_perhari AS harga_mobil, garasi.tersedia AS stok
+					$ambildata = mysqli_query($kon, "SELECT kendaraan.*, harga.harga_perhari AS harga_mobil
                                           FROM kendaraan
                                           INNER JOIN harga ON kendaraan.harga_idharga = harga.idharga
-                                          INNER JOIN garasi ON kendaraan.garasi_idgarasi = garasi.idgarasi
                                           ORDER BY kendaraan.idmobil ASC ");
 					$num = mysqli_num_rows($ambildata);
 				}
@@ -175,7 +173,7 @@
             <th class="border border-gray-400 px-4 py-2 text-center">Tahun</th>
             <th class="border border-gray-400 px-4 py-2 text-center">Gambar</th>
             <th class="border border-gray-400 px-4 py-2 text-center">Tersedia</th>
-            <th class="border border-gray-400 px-4 py-2 text-center">Harga Mobil</th>
+            <th class="border border-gray-400 px-4 py-2 text-center">Harga Sewa Mobil</th>
             <th class="border border-gray-400 px-4 py-2 text-center">Aksi</th>
         </tr>
 		<tbody>
@@ -193,8 +191,8 @@
                                     <img src='../../kendaraan/aset/{$row['gambar_mobil']}' alt='Gambar Mobil' width='240' height='300'></a>";
                         }
                         "</td>";
-                    echo "<td>" . $tersedia = $userAmbilData['stok'] . "</td>";
-                    echo "<td>Harga 1 Mobil = Rp. " . $harga_perhari = $userAmbilData['harga_mobil'] . "</td>";
+                    echo "<td class='border border-gray-400 px-4 py-2'>" . $tersedia = $userAmbilData['tersedia'] . "</td>";
+                    echo "<td>Harga 1 Mobil = Rp. " . $harga_perhari = number_format($userAmbilData['harga_mobil'], 0, ',', '.') . "</td>";
 					echo "<td>
 							<a href='../../kendaraan/view/view.php?idmobil=" . $userAmbilData['idmobil'] . "' class='btn btn-view'> View </a> | 
 							<a href='../../kendaraan/view/update.php?idmobil=" . $userAmbilData['idmobil'] . "' class='btn btn-edit'> Edit </a> | 

@@ -15,7 +15,7 @@
 	}
 
 	$kelasController = new CustomerController($kon);
-	$idcustomer = $_GET['id_customer'];
+	$idcustomer = $_GET['idcustomer'];
 	$customerData = $kelasController->getCustomerData($idcustomer);
 
 	if ($customerData) {

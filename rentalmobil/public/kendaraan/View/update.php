@@ -9,10 +9,10 @@
 	$nama_mobil = $_POST['nama_mobil'];
     $merek = $_POST['merek'];
     $tahun = $_POST['tahun'];
-    $idgarasi = $_POST['idgarasi'];
+    $tersedia = $_POST['tersedia'];
     $idharga = $_POST['idharga'];
 
-		$message = $mobilController->updateMobil($idmobil, $nama_mobil, $merek, $tahun, $idgarasi, $idharga);
+		$message = $mobilController->updateMobil($idmobil, $nama_mobil, $merek, $tahun, $tersedia, $idharga);
 		echo $message;
 
 		header("Location: ../../dashboard/data/dashboardkendaraan.php");
@@ -22,7 +22,7 @@
     $nama_mobil = null;
     $merek = null;
     $tahun = null;
-    $idgarasi = null;
+    $tersedia = null;
     $idharga = null;
 
 	if (isset($_GET['idmobil']) && is_numeric($_GET['idmobil'])) {
@@ -34,7 +34,7 @@
 			$nama_mobil = $result['nama_mobil'];
 			$merek = $result['merek'];
 			$tahun = $result['tahun'];
-            $idgarasi = $result['garasi_idgarasi'];
+            $tersedia = $result['tersedia'];
 			$idharga = $result['harga_idharga'];
 		} else{
 			echo "ID Tidak Valid.";
@@ -196,7 +196,7 @@
                 </tr>
                 <tr>
                     <td>Garasi</td>
-                    <td><input class="input" type="text" name="idgarasi" value="<?php echo $idgarasi; ?>"></td>
+                    <td><input class="input" type="text" name="tersedia" value="<?php echo $tersedia; ?>"></td>
                 </tr>
                 <tr>
                     <td>Harga Mobil</td>

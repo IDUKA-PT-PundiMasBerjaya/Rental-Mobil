@@ -22,7 +22,7 @@
 
 		public function tambahDataHarga($data) {
 			$idharga = $data['idharga'];
-			$harga_perhari = $data['harga_per_hari'];
+			$harga_perhari = $data['harga_perhari'];
 
 					$insertData = mysqli_query($this->kon, "INSERT INTO harga (idharga, harga_perhari) VALUES ('$idharga', '$harga_perhari')");
 

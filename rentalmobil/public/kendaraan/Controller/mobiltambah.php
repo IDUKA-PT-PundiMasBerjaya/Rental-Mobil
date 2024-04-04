@@ -25,7 +25,7 @@
             $nama_mobil = $data['nama_mobil'];
             $merek = $data['merek'];
             $tahun = $data['tahun'];
-			$idgarasi = $data ['garasi_idgarasi'];
+			$tersedia = $data ['tersedia'];
             $idharga = $data['harga_idharga'];
 
 			//Menambahkan Gambar
@@ -39,7 +39,7 @@
 			if (in_array($ekstensi, $ekstensi_diperbolehkan) === true) {
 				if ($ukuran <= 2000000) {
 					move_uploaded_file($file_temp, '../aset/' . $namagambar);
-					$insertData = mysqli_query($this->kon, "INSERT INTO kendaraan (idmobil, nama_mobil, merek, tahun, gambar_mobil, garasi_idgarasi, harga_idharga) VALUES ('$idmobil', '$nama_mobil', '$merek', '$tahun', '$namagambar', '$idgarasi', '$idharga')");
+					$insertData = mysqli_query($this->kon, "INSERT INTO kendaraan (idmobil, nama_mobil, merek, tahun, gambar_mobil, tersedia, harga_idharga) VALUES ('$idmobil', '$nama_mobil', '$merek', '$tahun', '$namagambar', '$tersedia', '$idharga')");
 
 					if ($insertData) {
 						return "Data berhasil disimpan.";

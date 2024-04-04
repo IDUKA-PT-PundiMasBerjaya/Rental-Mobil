@@ -12,16 +12,12 @@
             'nama_mobil' => $_POST['nama_mobil'],
             'merek' => $_POST['merek'],
             'tahun' => $_POST['tahun'],
-            'garasi_idgarasi' => $_POST['idgarasi'],
+            'tersedia' => $_POST['tersedia'],
             'harga_idharga' => $_POST['idharga'],
 		];
 
 		$message = $mobilController->tambahDataMobil($data);
     }
-    //inner join tabel Harga dan Garasi
-    $dataGarasi = "SELECT idgarasi, tersedia FROM garasi";
-    $hasilGarasi = mysqli_query($kon, $dataGarasi);
-
     $dataHarga = "SELECT idharga, harga_perhari FROM harga";
 	$hasilHarga = mysqli_query($kon, $dataHarga);
 ?>
@@ -174,15 +170,7 @@
                 </tr>
                 <tr>
                     <td>Tersedia</td>
-                    <td>
-                        <select id="idgarasi" name="idgarasi">
-                            <?php while ($row = mysqli_fetch_assoc($hasilGarasi)) : ?>
-                                <option value="<?php echo $row['idgarasi']; ?>">
-                                    <?php echo $row['idgarasi'] . ' - ' . $row['tersedia']; ?>
-                                </option>
-                            <?php endwhile; ?>
-                        </select>
-                    </td>
+                    <td><input class="input" type="text" name="tersedia" required></td>
                 </tr>
                 <tr>
                     <td>Harga Mobil</td>

@@ -5,7 +5,7 @@
 	$hargaController = new hargaController($kon);
 
 	if (isset($_POST['submit'])) {
-		$id_harga = $hargaController->tambahHarga();
+		$idharga = $hargaController->tambahHarga();
 
 		$data = [
 			'idharga' => $idharga,

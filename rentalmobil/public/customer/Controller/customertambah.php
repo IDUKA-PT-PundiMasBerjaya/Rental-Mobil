@@ -20,7 +20,7 @@
 		}
 
 		public function tambahDataCustomer($data) {
-			$idcustomer = $data['id_customer'];
+			$idcustomer = $data['idcustomer'];
 			$nama = $data['nama'];
 			$alamat = $data['alamat'];
 			$email = $data['email'];

@@ -5,7 +5,7 @@
 	$customerController = new CustomerController($kon);
 
 	if (isset($_POST['submit'])) {
-		$id_customer = $customerController->tambahCustomer();
+		$idcustomer = $customerController->tambahCustomer();
 
 		$data = [
 			'idcustomer' => $idcustomer,

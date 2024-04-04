@@ -43,12 +43,12 @@
 			<tr>
 				<td>Tersedia </td>
 				<td>: </td>
-				<td><?php echo $garasi_idgarasi; ?></td>
+				<td><?php echo $tersedia; ?></td>
 			</tr>
 			<tr>
 				<td>Harga Mobil</td>
 				<td>: </td>
-				<td><?php echo $harga_idharga; ?></td>
+				<td><?php echo $idharga; ?></td>
 			</tr>
 		</table>
 	</form>
