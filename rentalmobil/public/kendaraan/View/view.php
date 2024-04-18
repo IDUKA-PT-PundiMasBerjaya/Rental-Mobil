@@ -31,6 +31,11 @@
 				<td><?php echo $merek; ?></td>
 			</tr>
 			<tr>
+				<td>Tipe </td>
+				<td>: </td>
+				<td><?php echo $tipe; ?></td>
+			</tr>
+			<tr>
 				<td>Tahun </td>
 				<td>: </td>
 				<td><?php echo $tahun; ?></td>
@@ -41,14 +46,9 @@
 				<td><?php echo $gambar_mobil; ?></td>
 			</tr>
 			<tr>
-				<td>Tersedia </td>
+				<td>Harga Per Hari </td>
 				<td>: </td>
-				<td><?php echo $tersedia; ?></td>
-			</tr>
-			<tr>
-				<td>Harga Mobil</td>
-				<td>: </td>
-				<td><?php echo $idharga; ?></td>
+				<td><?php echo $harga_perhari; ?></td>
 			</tr>
 		</table>
 	</form>

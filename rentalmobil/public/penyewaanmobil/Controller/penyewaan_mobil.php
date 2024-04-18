@@ -8,39 +8,39 @@ class TambahMobilController {
 
         public function TambahDataPenyewaanMobil($data) {
             $id_penyewaan = $data['id_penyewaan'];
-            $jumlah_array = $data['jumlah_mobil'];
-            $idmobil_array = $data['kendaraan_idmobil'];
+            $jumlah_array = $data['stok_mobil'];
+            $idgarasi_array = $data['garasi_idgarasi'];
 
             if (empty($id_penyewaan) || !is_numeric($id_penyewaan)) {
-                return "Gagal menyimpan data, Penyewaan ID tidak valid.";
+                return "Gagal menyimpan data, ID Penyewaan tidak valid.";
             }
-            foreach ($idmobil_array as $key => $kendaraan_idmobil) {
+            foreach ($idgarasi_array as $key => $garasi_idgarasi) {
                 $jumlah = $jumlah_array[$key];
 
                 if (!is_numeric($jumlah)) {
-                    return "Gagal menyimpan data, Jumlah bukan bilangan.";
+                    return "Gagal menyimpan data, Jumlah harus berupa angka.";
                 }
 
-                $stokMobil = $this->cekStokMobil($kendaraan_idmobil, $jumlah);
+                $stokMobil = $this->cekStokMobil($garasi_idgarasi, $jumlah);
                 if ($stokMobil === false) {
-                    return "Stok barang tidak mencukupi";
+                    return "Stok mobil tidak mencukupi.";
                 }
 
-                $insertData = mysqli_query($this->kon, "INSERT INTO penyewaan_mobil (id_penyewaan, jumlah_mobil, kendaraan_idmobil)
-                                                        VALUES ('$id_penyewaan', '$jumlah', '$kendaraan_idmobil)')");
+                $insertData = mysqli_query($this->kon, "INSERT INTO penyewaan_mobil (id_penyewaan, stok_mobil, garasi_idgarasi)
+                                                        VALUES ('$id_penyewaan', '$jumlah', '$garasi_idgarasi')");
                 
                 if (!$insertData) {
-                    return "Gagal menyimpan data. Error : " . mysqli_error($this->kon);
+                    return "Gagal menyimpan data. Kesalahan: " . mysqli_error($this->kon);
                 }
             }
             return "Data berhasil disimpan.";
         }
 
-        private function cekStokMobil($kendaraan_idmobil, $jumlah) {
-            $query = mysqli_query ($this->kon, "SELECT tersedia FROM kendaraan WHERE idmobil = '$kendaraan_idmobil'");
+        private function cekStokMobil($garasi_idgarasi, $jumlah) {
+            $query = mysqli_query ($this->kon, "SELECT stok FROM garasi WHERE idgarasi = '$garasi_idgarasi'");
             $data = mysqli_fetch_assoc($query);
 
-            if ($data['tersedia'] >= $jumlah) {
+            if ($data['stok'] >= $jumlah) {
                 return true;
             } else {
                 return false;

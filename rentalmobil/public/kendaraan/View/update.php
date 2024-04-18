@@ -8,11 +8,11 @@
 	$idmobil = $_POST['idmobil'];
 	$nama_mobil = $_POST['nama_mobil'];
     $merek = $_POST['merek'];
+    $warna = $_POST['warna'];
     $tahun = $_POST['tahun'];
-    $tersedia = $_POST['tersedia'];
-    $idharga = $_POST['idharga'];
+    $harga_perhari = $_POST['harga_perhari']; // Menambahkan harga per hari
 
-		$message = $mobilController->updateMobil($idmobil, $nama_mobil, $merek, $tahun, $tersedia, $idharga);
+		$message = $mobilController->updateMobil($idmobil, $nama_mobil, $merek, $warna, $tahun, $harga_perhari); // Menambahkan harga per hari sebagai argumen
 		echo $message;
 
 		header("Location: ../../dashboard/data/dashboardkendaraan.php");
@@ -21,9 +21,9 @@
 	$idmobil = null;
     $nama_mobil = null;
     $merek = null;
+    $warna = null;
     $tahun = null;
-    $tersedia = null;
-    $idharga = null;
+    $harga_perhari = null; // Inisialisasi harga per hari
 
 	if (isset($_GET['idmobil']) && is_numeric($_GET['idmobil'])) {
 		$idmobil = $_GET['idmobil'];
@@ -33,9 +33,9 @@
 			$idmobil = $result['idmobil'];
 			$nama_mobil = $result['nama_mobil'];
 			$merek = $result['merek'];
+            $warna = $result['warna'];
 			$tahun = $result['tahun'];
-            $tersedia = $result['tersedia'];
-			$idharga = $result['harga_idharga'];
+			$harga_perhari = $result['harga_perhari']; // Menambahkan harga per hari
 		} else{
 			echo "ID Tidak Valid.";
 		}
@@ -156,7 +156,8 @@
         td:nth-child(4),
         td:nth-child(5),
         td:nth-child(6),
-        td:nth-child(7) {
+        td:nth-child(7),
+        td:nth-child(8) {
             color: #020617; /* Warna teks Hitam */
         }
         /* Style untuk tombol update */
@@ -191,16 +192,16 @@
                     <td><input class="input" type="text" name="merek" value="<?php echo $merek; ?>"></td>
                 </tr>
                 <tr>
+                    <td>Warna</td>
+                    <td><input class="input" type="text" name="warna" value="<?php echo $warna; ?>"></td>
+                </tr>
+                <tr>
                     <td>Tahun</td>
                     <td><input class="input" type="text" name="tahun" value="<?php echo $tahun; ?>"></td>
                 </tr>
                 <tr>
-                    <td>Garasi</td>
-                    <td><input class="input" type="text" name="tersedia" value="<?php echo $tersedia; ?>"></td>
-                </tr>
-                <tr>
-                    <td>Harga Mobil</td>
-                    <td><input class="input" type="text" name="idharga" value="<?php echo $idharga; ?>"></td>
+                    <td>Harga Per Hari</td> <!-- Menambahkan baris untuk harga per hari -->
+                    <td><input class="input" type="text" name="harga_perhari" value="<?php echo $harga_perhari; ?>"></td> <!-- Menambahkan input untuk harga per hari -->
                 </tr>
             </table>
               <div class="update-button">

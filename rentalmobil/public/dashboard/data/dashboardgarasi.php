@@ -72,7 +72,13 @@
 		/* Style untuk sel yang sejajar dengan ID Buku */
         th:first-child,
         th:nth-child(2),
-        th:nth-child(3) {
+        th:nth-child(3),
+        th:nth-child(4),
+        th:nth-child(5),
+        th:nth-child(6),
+        th:nth-child(7),
+        th:nth-child(8),
+        th:nth-child(9) {
             color: #fff; /* Warna teks putih */
         }
 
@@ -146,15 +152,29 @@
 			<?php  
 				if (isset($_GET['cari'])) {
 					$cari = $_GET['cari'];
-					$ambildata = mysqli_query($kon, "SELECT * FROM garasi WHERE idgarasi LIKE '%".$cari."%' OR tersedia LIKE '%".$cari."%'");
+					$ambildata = mysqli_query($kon, "SELECT garasi.idgarasi, kendaraan.nama_mobil, kendaraan.merek, kendaraan.warna,  kendaraan.tahun, kendaraan.gambar_mobil AS gambar, garasi.stok
+                                                    FROM kendaraan
+                                                    INNER JOIN garasi
+                                                    ON kendaraan.idmobil = garasi.kendaraan_idmobil
+                                                    WHERE garasi.idgarasi LIKE '%" . $cari . "%' OR kendaraan.nama_mobil LIKE '%" . $cari . "%' OR kendaraan.merek LIKE '%" . $cari . "%' OR kendaraan.warna LIKE '%" . $cari . "%' OR garasi.stok LIKE '%" . $cari . "%'");
 				} else {
-					$ambildata = mysqli_query($kon, "SELECT * FROM garasi ORDER BY idgarasi ASC ");
+					$ambildata = mysqli_query($kon, "SELECT garasi.idgarasi, kendaraan.nama_mobil, kendaraan.merek, kendaraan.warna,  kendaraan.tahun, kendaraan.gambar_mobil AS gambar, garasi.stok
+                                                    FROM kendaraan
+                                                    INNER JOIN garasi
+                                                    ON kendaraan.idmobil = garasi.kendaraan_idmobil
+                                                    ORDER BY garasi.idgarasi ASC");
 					$num = mysqli_num_rows($ambildata);
 				}
 			?>
 		<tr>
 			<th class="border border-gray-400 px-4 py-2 text-center"> ID Garasi </th>
-			<th class="border border-gray-400 px-4 py-2 text-center"> Tersedia </th>
+            <th class="border border-gray-400 px-4 py-2 text-center"> Nama Mobil</th>
+            <th class="border border-gray-400 px-4 py-2 text-center"> Merek </th>
+            <th class="border border-gray-400 px-4 py-2 text-center"> Warna </th>
+            <th class="border border-gray-400 px-4 py-2 text-center"> Tahun </th>
+            <th class="border border-gray-400 px-4 py-2 text-center"> Gambar </th>
+			<th class="border border-gray-400 px-4 py-2 text-center"> Stok  </th>
+            <th class="border border-gray-400 px-4 py-2 text-center"> Status Mobil  </th>
 			<th class="border border-gray-400 px-4 py-2 text-center"> Aksi </th>
 		</tr>
 		<tbody>
@@ -162,10 +182,17 @@
 			while ($userAmbilData = mysqli_fetch_array($ambildata)) {
 				echo "<tr>";
 					echo "<td class='border border-gray-400 px-4 py-2'>" . $idgarasi = $userAmbilData['idgarasi'] . "</td>";
-					echo "<td class='border border-gray-400 px-4 py-2'>" . $tersedia = $userAmbilData['tersedia'] . "</td>";
+                    echo "<td class='border border-gray-400 px-4 py-2'>" . $nama_mobil = $userAmbilData['nama_mobil'] . "</td>";
+                    echo "<td class='border border-gray-400 px-4 py-2'>" . $merek = $userAmbilData['merek'] . "</td>";
+                    echo "<td class='border border-gray-400 px-4 py-2'>" . $warna = $userAmbilData['warna'] . "</td>";
+                    echo "<td class='border border-gray-400 px-4 py-2'>" . $tahun = $userAmbilData['tahun'] . "</td>";
+                    echo "<td class='border border-gray-400 px-4 py-2'><img src='../../kendaraan/aset/" . $userAmbilData['gambar'] . "' width='100'></td>";
+					$stok = $userAmbilData['stok'];
+					echo "<td class='border border-gray-400 px-4 py-2'>" . $stok . "</td>";
+					$statusMobil = $stok > 0 ? "Tersedia" : "Kosong";
+					echo "<td class='border border-gray-400 px-4 py-2'>" . $statusMobil . "</td>";
 					echo "<td class='border border-gray-400 px-4 py-2'> 
 							<a href='../../garasi/View/view.php?idgarasi=" . $userAmbilData['idgarasi'] . "' class='btn btn-view'> View </a> | 
-							<a href='../../garasi/View/update.php?idgarasi=" . $userAmbilData['idgarasi'] . "' class='btn btn-edit'> Edit </a> |
 							<a href='../../garasi/Controller/garasihapus.php?idgarasi=" . $userAmbilData['idgarasi'] ."' class='btn btn-hapus'> Hapus </a>  
 						</td>";
 				echo "</tr>";

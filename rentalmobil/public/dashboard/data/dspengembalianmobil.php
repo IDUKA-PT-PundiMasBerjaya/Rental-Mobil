@@ -9,26 +9,28 @@
     $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
     $start = ($page > 1) ? ($page * $perPage) - $perPage : 0;
 
-    $query = "SELECT penyewaan_mobil.id_penyewaan, kendaraan.nama_mobil AS nama_kendaraan,
+    $query = "SELECT pengembalian_mobil.id_pengembalian, kendaraan.nama_mobil AS nama_kendaraan,
                 CASE
                     WHEN customer.nama IS NOT NULL THEN customer.nama
                 END AS namapenyewa,
-                penyewaan_mobil.stok_mobil,
+                pengembalian_mobil.stok_mobil,
                 garasi.stok AS stok_garasi,
                 kendaraan.gambar_mobil AS gambar_kendaraan,
-                penyewaan.tanggal_sewa,
-                kendaraan.merek
+                pengembalian_mobil.tanggal_pengembalian,
+                penyewaan.id_penyewaan AS penyewaan_id_penyewaan,
+                pengembalian_mobil.denda,
+                DATEDIFF(pengembalian_mobil.tanggal_pengembalian, penyewaan.tanggal_kembali) AS telat_hari
                 FROM 
-                penyewaan_mobil
+                pengembalian_mobil
                 JOIN 
-                penyewaan ON penyewaan_mobil.id_penyewaan = penyewaan.id_penyewaan                
+                penyewaan ON pengembalian_mobil.id_pengembalian = penyewaan.id_penyewaan                
                 LEFT JOIN
                 customer ON penyewaan.customer_idcustomer = customer.idcustomer
                 JOIN 
-                garasi ON penyewaan_mobil.garasi_idgarasi = garasi.idgarasi
+                garasi ON pengembalian_mobil.garasi_idgarasi = garasi.idgarasi
                 JOIN
                 kendaraan ON garasi.kendaraan_idmobil = kendaraan.idmobil";
-
+    
     if (!empty($cari)) {
         $query .= " WHERE penyewaan_mobil.id_penyewaan LIKE '%".$cari."%' 
                     OR kendaraan.nama_mobil LIKE '%".$cari."%' 
@@ -36,11 +38,8 @@
                     OR kendaraan.merek LIKE '%".$cari."%'";
     }
 
-    $query .= " ORDER BY penyewaan_mobil.id_penyewaan DESC LIMIT $start, $perPage";
-    $ambildata = mysqli_query($kon, $query);
-    if (!$ambildata) {
-        die('Error: ' . mysqli_error($kon));
-    }
+    $query .= " ORDER BY pengembalian_mobil.id_pengembalian DESC LIMIT $start, $perPage";
+    $ambildata = mysqli_query($kon, $query) or die(mysqli_error($kon));
     $num = mysqli_num_rows($ambildata);
 ?>
 <!DOCTYPE html>
@@ -48,7 +47,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Halaman Data Penyewaan Mobil </title>
+    <title> Halaman Data Pengembalian Mobil </title>
     <style>
         /* Style untuk tombol pencarian (search) */
         .search-container {
@@ -82,16 +81,17 @@
 </head>
 <body>
     <div class="search-container">
-        <form action="dspenyewaanmobil.php" method="get">
-            <input type="text" name="cari" value="<?php echo isset($_GET['cari']) ? $_GET['cari'] : ''; ?>" placeholder="Cari...">
+        <form action="dspengembalianmobil.php" method="get">
+            <label>Cari: </label>
+            <input type="text" name="cari" value="<?php echo isset($_GET['cari']) ? $_GET['cari'] : ''; ?>">
             <input type="submit" value="Cari">
         </form>
     </div>
-    <?php include("../../penyewaanmobil/Controller/tabel_template.php") ?> <!-- tabel_template.php -->
+    <?php include("../../pengembalianmobil/Controller/tabel_template.php") ?>
     <?php 
-        $totalData = mysqli_num_rows(mysqli_query($kon, "SELECT * FROM penyewaan_mobil"));
-        $totalPage = ceil($totalData / $perPage);
-        include("../../penyewaanmobil/Controller/pagination_template.php"); // pagination_template.php
+        $totalPage = mysqli_num_rows(mysqli_query($kon, "SELECT * FROM pengembalian_mobil")); 
+        $totalPage = ceil($totalPage / $perPage);
+        include("../../pengembalianmobil/Controller/pagination_template.php")
     ?>
 </body>
 </html>

@@ -22,9 +22,9 @@
 		$idmobil = $mobilData['idmobil'];
 		$nama_mobil = $mobilData['nama_mobil'];
 		$merek = $mobilData['merek'];
+		$warna = $mobilData['warna'];
 		$tahun = $mobilData['tahun'];
 		$gambar_mobil = $mobilData['gambar_mobil'];
-		$tersedia = $mobilData['tersedia'];
-		$idharga = $mobilData['harga_idharga'];
+		$harga_perhari = $mobilData['harga_perhari']; // Menambahkan harga_perhari
 	}
 ?>

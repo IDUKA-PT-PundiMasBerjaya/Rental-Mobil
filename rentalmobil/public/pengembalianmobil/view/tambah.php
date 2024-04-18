@@ -1,40 +1,48 @@
 <?php 
-include_once("../../../config/koneksi.php");
-include_once("../Controller/penyewaan_mobil.php");
-$penyewaanMobilController = new TambahMobilController($kon);
-// Mengambil data penyewaan
-$dataPenyewaan = "SELECT penyewaan.id_penyewaan,
-                        CASE
-                            WHEN customer.nama IS NOT NULL THEN customer.nama
-                            ELSE 'Tidak Diketahui'
-                        END AS namapenyewa
-                        FROM
-                        penyewaan
-                        LEFT JOIN 
-                        customer ON penyewaan.customer_idcustomer = customer.idcustomer
-                      WHERE penyewaan.id_penyewaan NOT IN (SELECT DISTINCT id_penyewaan FROM penyewaan_mobil)"; // Menghilangkan ID jika sudah tersimpan
-$hasilPenyewaan = mysqli_query($kon, $dataPenyewaan);
-// Mengambil data mobil untuk opsi dropdown
-$dataMobil = "SELECT idgarasi, kendaraan_idmobil FROM garasi";
-$hasilMobil = mysqli_query($kon, $dataMobil);
-// Hasil cek isian data agar sama dengan Controller
-if (isset($_POST['submit'])) {
-    // Menggunakan satu ID Penyewaan untuk semua mobil yang ditambahkan
-    $data = [
-        'id_penyewaan' => (isset($_POST['id_penyewaan'])) ? $_POST['id_penyewaan'] : null,
-        'stok_mobil' => $_POST['stok_mobil'], // Ini adalah sebuah ARRAY
-        'garasi_idgarasi' => $_POST['garasi_idgarasi'],
-    ];
-    // Menambahkan data penyewaan mobil
-    $message = $penyewaanMobilController->TambahDataPenyewaanMobil($data);
-}
+    include_once("../../../config/koneksi.php");
+    include_once("../Controller/pengembalian_mobil.php");
+
+    $pengembalianMobilController = new TambahDataController($kon);
+
+    $dataPengembalian = "SELECT penyewaan.id_penyewaan,
+                            CASE
+                                WHEN customer.nama IS NOT NULL THEN customer.nama
+                            END AS namapenyewa
+                            FROM penyewaan
+                            LEFT JOIN customer ON penyewaan.customer_idcustomer = customer.idcustomer
+                            WHERE penyewaan.id_penyewaan NOT IN (SELECT DISTINCT id_pengembalian FROM pengembalian_mobil)";
+    
+    $hasilPengembalian = mysqli_query($kon, $dataPengembalian);
+
+    if (isset($_POST['penyewaan_id_penyewaan'])) {
+        $penyewaan_id = $_POST['penyewaan_id_penyewaan'];
+        $dataMobil = "SELECT garasi.idgarasi, garasi.kendaraan_idmobil
+                     FROM penyewaan_mobil
+                     INNER JOIN garasi ON penyewaan_mobil.garasi_idgarasi = garasi.idgarasi
+                     WHERE penyewaan_mobil.penyewaan_id_penyewaan = $penyewaan_id";
+        $hasilMobil = mysqli_query($kon, $dataMobil);
+    } else {
+        // Default: Tampilkan semua Mobil
+        $dataMobil = "SELECT idgarasi, kendaraan_idmobil FROM garasi";
+        $hasilMobil = mysqli_query($kon, $dataMobil);
+    }
+
+    if (isset($_POST['submit'])) {
+        $data = [
+            'penyewaan_id_penyewaan' => (isset($_POST['penyewaan_id_penyewaan'])) ? $_POST['penyewaan_id_penyewaan'] : '',
+            'stok_mobil' => $_POST['stok_mobil'],
+            'tanggal_pengembalian' => $_POST['tanggal_pengembalian'],
+            'garasi_idgarasi' => $_POST['garasi_idgarasi'],
+        ];
+        $message = $pengembalianMobilController->TambahDataPengembalianMobil($data);
+        header("Location: tambah.php");
+        exit;
+    }
 ?>
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
-    <title>Halaman Tambah Penyewaan Mobil</title>
-    <link rel="stylesheet" href="../../css/output.css">
-    <style>
+<style>
         /* Style untuk judul tabel */
         h1 {
             text-align: center;
@@ -120,21 +128,24 @@ if (isset($_POST['submit'])) {
             color: #fff; /* Warna teks putih */
         }
     </style>
+    <title>Halaman Pengembalian Mobil</title>
 </head>
-<body class="bg-gray-100">
-    <div class="container mx-auto py-4"> <!-- Padding atas dan bawah sedikit diperkecil -->
-        <h1>Tambah Data Penyewaan Mobil</h1>
-        <a href="../../dashboard/data/dspenyewaanmobil.php">Home</a>
-        <form action="tambah.php" method="post" name="tambahpenyewaanmobil" enctype="multipart/form-data" onsubmit="return confirmSubmit()">
-            <div class="table-container">
-                <table>
-                    <tr> <th colspan="2">ID Penyewaan</th></tr>
-                    <tr>
+<body>
+<h1>Tambah Data Pengembalian Mobil</h1>
+    <a href="../../dashboard/data/dspengembalianmobil.php">Home</a>
+    <form action="tambah.php" method="post" name="formTambahPengembalianMobil" enctype="multipart/form-data" onsubmit="return confirmSubmit()">
+        <div class="table-container">
+            <table>
+                <tr>
+                    <th>ID Penyewaan</th>
+                    <th>Tanggal Pengembalian</th>
+                </tr>
+                <tr>
                     <td>
-                        <select id="id_penyewaan" name="id_penyewaan" style="width: 100%;">
-                            <?php if (mysqli_num_rows($hasilPenyewaan) > 0) : ?>
+                        <select id="penyewaan_id_penyewaan" name="penyewaan_id_penyewaan" style="width: 100%;" onchange="fillTwoInputs()">
+                            <?php if (mysqli_num_rows($hasilPengembalian) > 0) : ?>
                                 <option value="" disabled selected> Pilih ID Penyewaan </option>
-                                    <?php while ($row = mysqli_fetch_assoc($hasilPenyewaan)) : ?>
+                                    <?php while ($row = mysqli_fetch_assoc($hasilPengembalian)) : ?>
                                         <option value="<?php echo $row['id_penyewaan']; ?>">
                                             <?php echo $row['id_penyewaan'] . ' - ' . $row['namapenyewa']; ?>
                                         </option>
@@ -144,8 +155,9 @@ if (isset($_POST['submit'])) {
                             <?php endif; ?>
                         </select>
                     </td>
-                    </tr>
-                    <tr>
+                    <td><input type="date" name="tanggal_pengembalian" style="width: 100%;"></td>
+                </tr>
+                <tr>
                         <th>ID Mobil</th>
                         <th>Jumlah</th>
                     </tr>
@@ -171,53 +183,60 @@ if (isset($_POST['submit'])) {
         <button type="button" class="add-row-button" onclick="addRow()">Tambah Mobil</button>
         <input type="submit" name="submit" value="Tambah Data">
     </form>
-
-    <!-- Tambahkan bagian ini setelah form -->
-    <?php if (isset($message) && strpos($message, 'Stok barang tidak mencukupi') !== false): ?>
-        <div class="error-message">
+    <?php if (isset($message) && strpos($message, 'Stok Mobil tidak mencukupi') !== false): ?>
+        <div id="error-message" style="color: red;">
             <?php echo $message; ?>
         </div>
     <?php endif; ?>
     <script>
+        function fillTwoInputs() {
+            var selectedValue = document.getElementById("penyewaan_id_penyewaan").value;
+            document.getElementById("id_pengembalian").value = selectedValue;
+        }
+
         function addRow() {
             var table = document.querySelector('table');
             var lastRow = table.rows[table.rows.length - 1].cloneNode(true);
             var selects = lastRow.getElementsByTagName('select');
             var inputs = lastRow.getElementsByTagName('input');
 
+            // Atur ulang properti name untuk input agar unik
+            for (var i = 0; i < inputs.length; i++) {
+                inputs[i].value = '';
+                inputs[i].name = inputs[i].name.replace(/\[(\d+)\]/g, function(match, p1) {
+                    var index = parseInt(p1) + 1;
+                    return '[' + index + ']';
+                });
+            }
+
+            // Hapus nilai dari select
             for (var i = 0; i < selects.length; i++) {
                 selects[i].selectedIndex = 0;
             }
-            // Membuat baris baru
-            for (var i = 0; i < inputs.length; i++) {
-                if (inputs[i].type === 'number') {
-                    console.log('Jumlah:', inputs[i].value);
-                    inputs[i].value = 0;
-                } else {
-                    inputs[i].value = '';
-                }
-            }
-            // Hapus tombol hapus jika sudah ada 
+
+            // Hapus tombol hapus jika sudah ada
             var existingDeleteButton = lastRow.querySelector('button');
             if (existingDeleteButton) {
                 lastRow.removeChild(existingDeleteButton);
             }
+
             // Tambahkan tombol Hapus
             var deleteButton = document.createElement('button');
             deleteButton.type = 'button';
-            deleteButton.textContent = 'Hapus';
+            deleteButton.textContent = 'X';
             deleteButton.onclick = function() {
                 table.removeChild(lastRow);
             };
             lastRow.appendChild(deleteButton);
             table.appendChild(lastRow);
+
             // Menghapus pesan kesalahan jika ada
             var existingErrorMessage = document.querySelector('.error-message');
             if (existingErrorMessage) {
                 existingErrorMessage.remove();
             }
         }
-        // Fungsi menampilkan pesan kesalahan
+        //Fungsi menampilkan pesan kesalahan
         function showError(message) {
             var errorMessage = document.createElement('div');
             errorMessage.classList.add('error-message');
@@ -227,9 +246,9 @@ if (isset($_POST['submit'])) {
         }
 
         function confirmSubmit() {
-            var confirmation = confirm('Data yang sudah disimpan tidak bisa diubah');
+            var confirmation = confirm('Data yang sudah di simpan tidak bisa di Edit');
             if (confirmation) {
-                return true; // Submit Formulir jika menekan OK
+                return true; //Submit Formulir jika menekan OK
             } else {
                 return false; // Batalkan jika menekan Cancel
             }

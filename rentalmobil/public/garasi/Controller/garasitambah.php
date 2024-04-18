@@ -1,37 +1,37 @@
-<?php  
-	include_once("../../../config/koneksi.php");
+<?php 
+    include_once("../../../config/koneksi.php");
 
-	class GarasiController {
-		private $kon; 
+    class GarasiController {
+        private $kon;
 
-		public function __construct($connection) {
-			$this->kon = $connection;
-		}
+        public function __construct($connection) {
+            $this->kon = $connection;
+        }
 
-		public function tambahGarasi() {
-			$setAuto = mysqli_query($this->kon, "SELECT MAX(idgarasi) AS max_id FROM garasi");
-			$result = mysqli_fetch_assoc($setAuto);
-			$max_id = $result['max_id'];
+        public function TambahGarasi() {
+            $setAuto = mysqli_query($this->kon, "SELECT MAX(idgarasi) AS max_id FROM garasi");
+            $result = mysqli_fetch_assoc($setAuto);
+            $max_id = $result['max_id'];
 
-			if (is_numeric($max_id)) {
-				$nounik = $max_id + 1;
-			} else {
-				$nounik = 1;
-			} return $nounik;
-		}
+            if (is_numeric($max_id)) {
+                $nounik = $max_id + 1;
+            } else {
+                $nounik = 1;;
+            } return $nounik;
+        }
 
-		public function tambahDataGarasi($data) {
-			$idgarasi = $data['idgarasi'];
-			$tersedia = $data['tersedia'];
+        public function tambahDataGarasi($data) {
+            $idgarasi = $data['idgarasi'];
+            $kendaraan_idmobil = $data['kendaraan_idmobil'];
+            $stok = $data['stok'];
 
-					$insertData = mysqli_query($this->kon, "INSERT INTO garasi (idgarasi, tersedia) VALUES ('$idgarasi', '$tersedia')");
-
-					if ($insertData) {
-						return "Data berhasil disimpan.";
-					} else {
-						return "Gagal menyimpan data.";
-					}
-
-		}
-	}
+            $insertData = mysqli_query($this->kon, "INSERT INTO garasi(idgarasi, kendaraan_idmobil, stok) VALUES ('$idgarasi', '$kendaraan_idmobil', '$stok')");
+            
+            if ($insertData) {
+                return "Data berhasil disimpan.";
+            } else {
+                return "gagal menyimpan data.";
+            }
+        }
+    }
 ?>

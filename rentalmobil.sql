@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 04, 2024 at 11:18 AM
+-- Generation Time: Apr 18, 2024 at 08:14 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -71,27 +71,17 @@ INSERT INTO `customer` (`idcustomer`, `nama`, `alamat`, `email`, `no_hp`) VALUES
 
 CREATE TABLE `garasi` (
   `idgarasi` int(11) NOT NULL,
-  `kendaraan_idmobil` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `harga`
---
-
-CREATE TABLE `harga` (
-  `idharga` int(11) NOT NULL,
-  `harga_perhari` int(11) DEFAULT NULL
+  `kendaraan_idmobil` int(11) DEFAULT NULL,
+  `stok` tinyint(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `harga`
+-- Dumping data for table `garasi`
 --
 
-INSERT INTO `harga` (`idharga`, `harga_perhari`) VALUES
-(1, 55000),
-(2, 100000);
+INSERT INTO `garasi` (`idgarasi`, `kendaraan_idmobil`, `stok`) VALUES
+(1, 1, 15),
+(2, 2, 10);
 
 -- --------------------------------------------------------
 
@@ -103,18 +93,19 @@ CREATE TABLE `kendaraan` (
   `idmobil` int(11) NOT NULL,
   `nama_mobil` varchar(100) DEFAULT NULL,
   `merek` varchar(100) DEFAULT NULL,
+  `warna` varchar(500) NOT NULL,
   `tahun` int(11) DEFAULT NULL,
   `gambar_mobil` varchar(500) DEFAULT NULL,
-  `tersedia` int(11) DEFAULT NULL,
-  `harga_idharga` int(11) DEFAULT NULL
+  `harga_perhari` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `kendaraan`
 --
 
-INSERT INTO `kendaraan` (`idmobil`, `nama_mobil`, `merek`, `tahun`, `gambar_mobil`, `tersedia`, `harga_idharga`) VALUES
-(1, 'Ayla', 'Daihatsu', 2023, 'ayla.png', 10, 1);
+INSERT INTO `kendaraan` (`idmobil`, `nama_mobil`, `merek`, `warna`, `tahun`, `gambar_mobil`, `harga_perhari`) VALUES
+(1, 'Ayla', 'Daihatsu', 'Merah', 2019, 'ayla.png', 75000),
+(2, 'WR-V Reson', 'Honda', 'Merah', 2023, 'Honda Reson.jpg', 75000);
 
 -- --------------------------------------------------------
 
@@ -124,21 +115,27 @@ INSERT INTO `kendaraan` (`idmobil`, `nama_mobil`, `merek`, `tahun`, `gambar_mobi
 
 CREATE TABLE `pengembalian_mobil` (
   `id_pengembalian` int(11) NOT NULL,
-  `jumlah_mobil` int(11) DEFAULT NULL,
-  `tanggal_pengembalian` date DEFAULT NULL,
+  `stok_mobil` int(11) NOT NULL,
+  `tanggal_pengembalian` date NOT NULL,
   `garasi_idgarasi` int(11) NOT NULL,
   `penyewaan_id_penyewaan` int(11) NOT NULL,
-  `kendaraan_idmobil` int(11) NOT NULL,
   `denda` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `pengembalian_mobil`
+--
+
+INSERT INTO `pengembalian_mobil` (`id_pengembalian`, `stok_mobil`, `tanggal_pengembalian`, `garasi_idgarasi`, `penyewaan_id_penyewaan`, `denda`) VALUES
+(1, 5, '2024-04-18', 1, 1, 800000);
 
 --
 -- Triggers `pengembalian_mobil`
 --
 DELIMITER $$
-CREATE TRIGGER `pengembalian` AFTER INSERT ON `pengembalian_mobil` FOR EACH ROW BEGIN
-	UPDATE garasi SET tersedia = tersedia + NEW.jumlah_mobil
-	WHERE idgarasi = NEW.garasi_idgarasi;
+CREATE TRIGGER `pengembalian` AFTER INSERT ON `pengembalian_mobil` FOR EACH ROW BEGIN 
+	UPDATE garasi SET stok = stok + NEW.stok_mobil
+    WHERE idgarasi = NEW.garasi_idgarasi;
 END
 $$
 DELIMITER ;
@@ -161,7 +158,8 @@ CREATE TABLE `penyewaan` (
 --
 
 INSERT INTO `penyewaan` (`id_penyewaan`, `tanggal_sewa`, `tanggal_kembali`, `customer_idcustomer`) VALUES
-(1, '2024-04-01', '2024-04-17', 1);
+(1, '2024-04-01', '2024-04-02', 1),
+(2, '2024-04-01', '2024-04-18', 2);
 
 -- --------------------------------------------------------
 
@@ -171,15 +169,15 @@ INSERT INTO `penyewaan` (`id_penyewaan`, `tanggal_sewa`, `tanggal_kembali`, `cus
 
 CREATE TABLE `penyewaan_mobil` (
   `id_penyewaan` int(11) NOT NULL,
-  `kendaraan_idmobil` int(11) DEFAULT NULL,
-  `jumlah_mobil` int(11) DEFAULT NULL
+  `garasi_idgarasi` int(11) NOT NULL,
+  `stok_mobil` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `penyewaan_mobil`
 --
 
-INSERT INTO `penyewaan_mobil` (`id_penyewaan`, `kendaraan_idmobil`, `jumlah_mobil`) VALUES
+INSERT INTO `penyewaan_mobil` (`id_penyewaan`, `garasi_idgarasi`, `stok_mobil`) VALUES
 (1, 1, 5);
 
 --
@@ -187,8 +185,8 @@ INSERT INTO `penyewaan_mobil` (`id_penyewaan`, `kendaraan_idmobil`, `jumlah_mobi
 --
 DELIMITER $$
 CREATE TRIGGER `penyewaan` AFTER INSERT ON `penyewaan_mobil` FOR EACH ROW BEGIN
-	UPDATE kendaraan SET tersedia = tersedia - NEW.jumlah_mobil
-    WHERE idmobil = NEW.kendaraan_idmobil;
+	UPDATE garasi SET stok = stok - NEW.stok_mobil
+    WHERE idgarasi = NEW.garasi_idgarasi;
 END
 $$
 DELIMITER ;
@@ -217,25 +215,18 @@ ALTER TABLE `garasi`
   ADD KEY `kendaraan_idmobil` (`kendaraan_idmobil`);
 
 --
--- Indexes for table `harga`
---
-ALTER TABLE `harga`
-  ADD PRIMARY KEY (`idharga`);
-
---
 -- Indexes for table `kendaraan`
 --
 ALTER TABLE `kendaraan`
-  ADD PRIMARY KEY (`idmobil`),
-  ADD KEY `harga_idharga` (`harga_idharga`);
+  ADD PRIMARY KEY (`idmobil`);
 
 --
 -- Indexes for table `pengembalian_mobil`
 --
 ALTER TABLE `pengembalian_mobil`
-  ADD KEY `fk_pengembalian_mobil_kendaraan1_idx` (`kendaraan_idmobil`),
-  ADD KEY `fk_pengembalian_mobil_penyewaan1_idx` (`penyewaan_id_penyewaan`),
-  ADD KEY `idx_id_pengembalian` (`id_pengembalian`);
+  ADD PRIMARY KEY (`id_pengembalian`),
+  ADD KEY `garasi_idgarasi` (`garasi_idgarasi`,`penyewaan_id_penyewaan`),
+  ADD KEY `penyewaan_id_penyewaan` (`penyewaan_id_penyewaan`);
 
 --
 -- Indexes for table `penyewaan`
@@ -249,7 +240,17 @@ ALTER TABLE `penyewaan`
 --
 ALTER TABLE `penyewaan_mobil`
   ADD KEY `id_penyewaan` (`id_penyewaan`),
-  ADD KEY `kendaraan_idmobil` (`kendaraan_idmobil`);
+  ADD KEY `garasi_idgarasi` (`garasi_idgarasi`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `pengembalian_mobil`
+--
+ALTER TABLE `pengembalian_mobil`
+  MODIFY `id_pengembalian` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Constraints for dumped tables
@@ -262,17 +263,11 @@ ALTER TABLE `garasi`
   ADD CONSTRAINT `garasi_ibfk_1` FOREIGN KEY (`kendaraan_idmobil`) REFERENCES `kendaraan` (`idmobil`);
 
 --
--- Constraints for table `kendaraan`
---
-ALTER TABLE `kendaraan`
-  ADD CONSTRAINT `kendaraan_ibfk_2` FOREIGN KEY (`harga_idharga`) REFERENCES `harga` (`idharga`);
-
---
 -- Constraints for table `pengembalian_mobil`
 --
 ALTER TABLE `pengembalian_mobil`
-  ADD CONSTRAINT `fk_pengembalian_mobil_kendaraan1` FOREIGN KEY (`kendaraan_idmobil`) REFERENCES `kendaraan` (`idmobil`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_pengembalian_mobil_penyewaan1` FOREIGN KEY (`penyewaan_id_penyewaan`) REFERENCES `penyewaan` (`id_penyewaan`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `pengembalian_mobil_ibfk_1` FOREIGN KEY (`penyewaan_id_penyewaan`) REFERENCES `penyewaan` (`id_penyewaan`),
+  ADD CONSTRAINT `pengembalian_mobil_ibfk_2` FOREIGN KEY (`garasi_idgarasi`) REFERENCES `garasi` (`idgarasi`);
 
 --
 -- Constraints for table `penyewaan`
@@ -284,8 +279,8 @@ ALTER TABLE `penyewaan`
 -- Constraints for table `penyewaan_mobil`
 --
 ALTER TABLE `penyewaan_mobil`
-  ADD CONSTRAINT `penyewaan_mobil_ibfk_1` FOREIGN KEY (`id_penyewaan`) REFERENCES `penyewaan` (`id_penyewaan`),
-  ADD CONSTRAINT `penyewaan_mobil_ibfk_2` FOREIGN KEY (`id_penyewaan`) REFERENCES `kendaraan` (`idmobil`);
+  ADD CONSTRAINT `penyewaan_mobil_ibfk_1` FOREIGN KEY (`garasi_idgarasi`) REFERENCES `garasi` (`idgarasi`),
+  ADD CONSTRAINT `penyewaan_mobil_ibfk_2` FOREIGN KEY (`id_penyewaan`) REFERENCES `penyewaan` (`id_penyewaan`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

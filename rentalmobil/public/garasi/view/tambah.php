@@ -9,12 +9,15 @@
 
 		$data = [
 			'idgarasi' => $idgarasi,
-      		'tersedia' => $_POST['tersedia'],
+            'kendaraan_idmobil' => $_POST['kendaraan_idmobil'],
+      		'stok' => $_POST['stok'],
 		];
 
 		$message = $garasiController->tambahDataGarasi($data);
-        
+    
 	}
+    $dataMobil= "SELECT idmobil, nama_mobil, merek, warna, tahun FROM kendaraan WHERE idmobil NOT IN (SELECT kendaraan_idmobil FROM garasi)";
+    $hasilMobil= mysqli_query($kon, $dataMobil);
 ?>
 
 <!DOCTYPE html>
@@ -140,13 +143,29 @@
 		<form action="tambah.php" method="POST", name="tambah", enctype="multipart/form-data">
 			<table border="1">
 			<tr>
-					<td>ID Garasi</td>
-					<td><input class="input_data_1" type="text" name="idgarasi" value="<?php echo($garasiController->tambahGarasi()) ?>" readonly></td>
-				</tr>
-			<tr>
-				<td>Tersedia</td>
-				<td><input class="input" type="text" name="tersedia" required></td>
-			</tr>
+                <td>NO ID</td>
+                <td><input style="width: 98%;" type="text" name="idgarasi" value="<?php echo($garasiController->TambahGarasi()) ?>" readonly></td>
+            </tr>
+            <tr>
+                <td>Mobil</td>
+                <td>
+                    <select name="kendaraan_idmobil" id="kendaraan_idmobil" required>
+                        <?php if (mysqli_num_rows($hasilMobil) == 0) : ?>
+                            <option disabled>Tidak ada data di Kendaraan.</option>
+                        <?php else : ?>
+                            <?php while ($row = mysqli_fetch_assoc($hasilMobil)) : ?>
+                                <option value="<?php echo $row['idmobil']; ?>">
+                                    <?php echo $row['idmobil'] . ' - ' . $row['nama_mobil'] . ' ' . $row['merek'] . ' ' . $row['warna'] . ' - ' . $row['tahun'] ?>
+                                </option>
+                            <?php endwhile; ?>
+                        <?php endif; ?>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Stok</td>
+                <td><input class="input" type="text" name="stok" required></td>
+            </tr>
 		</table>
 		<input type="submit" name="submit" value="Tambah Data">
 		<?php  if (isset($message)): ?>

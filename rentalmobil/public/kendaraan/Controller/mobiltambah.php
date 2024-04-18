@@ -24,9 +24,9 @@
 			$idmobil = $data['idmobil'];
             $nama_mobil = $data['nama_mobil'];
             $merek = $data['merek'];
+			$warna = $data['warna'];
             $tahun = $data['tahun'];
-			$tersedia = $data ['tersedia'];
-            $idharga = $data['harga_idharga'];
+            $harga_perhari = $data['harga_perhari']; // Kolom baru untuk harga per hari
 
 			//Menambahkan Gambar
 			$ekstensi_diperbolehkan = array('jpeg', 'jpg', 'png');
@@ -39,7 +39,7 @@
 			if (in_array($ekstensi, $ekstensi_diperbolehkan) === true) {
 				if ($ukuran <= 2000000) {
 					move_uploaded_file($file_temp, '../aset/' . $namagambar);
-					$insertData = mysqli_query($this->kon, "INSERT INTO kendaraan (idmobil, nama_mobil, merek, tahun, gambar_mobil, tersedia, harga_idharga) VALUES ('$idmobil', '$nama_mobil', '$merek', '$tahun', '$namagambar', '$tersedia', '$idharga')");
+					$insertData = mysqli_query($this->kon, "INSERT INTO kendaraan (idmobil, nama_mobil, merek, warna, tahun,gambar_mobil,  harga_perhari) VALUES ('$idmobil', '$nama_mobil', '$merek', '$warna', '$tahun','$namagambar',  '$harga_perhari')");
 
 					if ($insertData) {
 						return "Data berhasil disimpan.";

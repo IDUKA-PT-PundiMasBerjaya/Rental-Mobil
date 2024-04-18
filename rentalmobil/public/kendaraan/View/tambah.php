@@ -11,15 +11,13 @@
 			'idmobil' => $idmobil,
             'nama_mobil' => $_POST['nama_mobil'],
             'merek' => $_POST['merek'],
+            'warna' => $_POST['warna'],
             'tahun' => $_POST['tahun'],
-            'tersedia' => $_POST['tersedia'],
-            'harga_idharga' => $_POST['idharga'],
+            'harga_perhari' => $_POST['harga_perhari'], // Menambahkan harga per hari
 		];
 
 		$message = $mobilController->tambahDataMobil($data);
     }
-    $dataHarga = "SELECT idharga, harga_perhari FROM harga";
-	$hasilHarga = mysqli_query($kon, $dataHarga);
 ?>
 
 <!DOCTYPE html>
@@ -161,28 +159,24 @@
 					<td><input class="input" type="text" name="merek" required></td>
 				</tr>
                 <tr>
+                    <td>Warna</td>
+                    <td><input class="input" type="text" name="warna" required></td>
+                </tr>
+                <tr>
 					<td>Tahun</td>
 					<td><input class="input" type="text" name="tahun" required></td>
 				</tr>
+                <tr>
+                    <td>Harga Per Hari</td>
+                    <td><input class="input" type="text" name="harga_perhari" required></td>
+                </tr>
 				<tr>
                     <td>Gambar</td>
                     <td><input type="file" name="gambar_mobil" required></td>
                 </tr>
                 <tr>
-                    <td>Tersedia</td>
-                    <td><input class="input" type="text" name="tersedia" required></td>
-                </tr>
-                <tr>
-                    <td>Harga Mobil</td>
-                    <td>
-                    <select id="idharga" name="idharga">
-				        <?php while ($row = mysqli_fetch_assoc($hasilHarga)) : ?>
-					        <option value="<?php echo $row['idharga']; ?>">
-						        <?php echo $row['idharga'] . ' - ' . $row['harga_perhari']; ?>
-					        </option>
-				        <?php endwhile; ?>
-			        </select>
-                    </td>
+                    <td>Harga Per Hari</td>
+                    <td><input class="input" type="text" name="harga_perhari" required></td>
                 </tr>
 			</table>
 			<input type="submit" name="submit" value="Tambah Data">

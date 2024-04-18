@@ -67,7 +67,7 @@
             font-size: 16px;
         }
 
-        /* Style untuk sel yang sejajar dengan ID Buku */
+        /* Style untuk sel yang sejajar dengan ID Mobil */
         th:first-child,
         th:nth-child(2),
         th:nth-child(3),
@@ -76,7 +76,8 @@
         th:nth-child(6),
         th:nth-child(7),
         th:nth-child(8),
-        th:nth-child(9) {
+        th:nth-child(9),
+        th:nth-child(10) {
             color: #fff;
         }
 
@@ -91,12 +92,11 @@
         }
     </style>
 </head>
-<body class="bg-gray-100">
     <div class="container mx-auto py-8">
         <h1>Data Penyewaan Mobil</h1>
         <nav>
             <div>
-                <a href="../../penyewaanmobil/view/tambah.php" class="btn bg-blue-500 text-white">Meminjam Buku</a>
+                <a href="../../penyewaanmobil/view/tambah.php" class="btn bg-blue-500 text-white">Sewa Mobil</a>
                 <a href="../penyewaanmobil/view/cetak.php" target="_blank" class="btn bg-blue-500 text-white">Cetak</a>
             </div>
             <a href="../../../public/dashboard/dashboard.php" class="btn bg-blue-500 text-white home-link">Home</a>
@@ -116,6 +116,7 @@
                 <th> Penyewaan ID Mobil </th>
                 <th> Nama Penyewa </th>
                 <th> Nama Mobil </th>
+                <th> Merek </th>
                 <th> Gambar </th>
                 <th> Jumlah </th>
                 <th> Sisa </th>
@@ -145,16 +146,17 @@
                             echo "<td rowspan='{$rowspanCounts}'>" . $userAmbilData['namapenyewa'] . "</td>";
                             $firstRow = false;
                         }
-                        echo "<td>" . $userAmbilData['nama'] . "</td>";
-                        echo "<td><img src='../../kendaraan/aset/{$userAmbilData['gambar']}' alt='Gambar Mobil' style='max-width: 100px; max-height: 100px;'></td>";
-                        echo "<td>" . $userAmbilData['jumlah_mobil'] . "</td>";
-                        echo "<td>" . $userAmbilData['tersedia'] . "</td>";
+                        echo "<td>" . $userAmbilData['nama_kendaraan'] . "</td>";
+                        echo "<td>" . $userAmbilData['merek'] . "</td>";
+                        echo "<td><img src='../../kendaraan/aset/{$userAmbilData['gambar_kendaraan']}' alt='Gambar Mobil' style='width: 150px; height: 100px;'></td>";
+                        echo "<td>" . $userAmbilData['stok_mobil'] . "</td>";
+                        echo "<td>" . $userAmbilData['stok_garasi'] . "</td>";
                         echo "<td>" . $userAmbilData['tanggal_sewa'] . "</td>";
                         
                         if ($key === 0) {
                             echo "<td rowspan='{$rowspanCounts}'>";
                             if (isset($userAmbilData['id_penyewaan'])) {
-                                echo "<a href='../../penyewaanmobil/view/cetakpeminjam.php?id_penyewaan={$userAmbilData['id_penyewaan']}'> Cetak </a>";
+                                echo "<a href='../../penyewaanmobil/view/cetakpenyewaan.php?id_penyewaan={$userAmbilData['id_penyewaan']}'> Cetak </a>";
                             }
                             echo "</td>";
                         }
