@@ -140,8 +140,8 @@
 	<h1> Data Garasi </h1>
 		<nav>
 			<div>
-				<a href="../../garasi/View/tambah.php" class="btn bg-blue-500 text-white">Tambah Data Garasi</a>
-				<a href="../../garasi/View/cetak.php" target="_blank" class="btn bg-blue-500 text-white">Cetak</a>
+				<a href="../../garasi/view/tambah.php" class="btn bg-blue-500 text-white">Tambah Data Garasi</a>
+				<a href="../../garasi/view/cetak.php" target="_blank" class="btn bg-blue-500 text-white">Cetak</a>
 			</div>
             <div>
                 <a href="../dashboard.php" class="btn bg-blue-500 text-white">Home</a>

@@ -85,6 +85,9 @@
         .btn-cetak {
             color: #4299e1;
         }
+        .btn-cetak-pegembal{
+            color: #4299e1;
+        }
         
         /* Style untuk tombol Home */
         .home-link {
@@ -165,7 +168,7 @@
                     if ($key === 0) {
                         echo "<td rowspan='{$rowSpanCount}'>";
                         if (isset($userAmbilData['id_pengembalian'])) {
-                            echo "<a href='../../pengembalianmobil/view/cetakpengembali.php?id_pengembalian={$userAmbilData['id_pengembalian']}' target='_blank'>Cetak</a>";
+                            echo "<a href='../../pengembalianmobil/view/cetakpengembali.php?id_pengembalian={$userAmbilData['id_pengembalian']}' target='_blank' class=>Cetak</a>";
                         }
                         echo "</td>";
                     }

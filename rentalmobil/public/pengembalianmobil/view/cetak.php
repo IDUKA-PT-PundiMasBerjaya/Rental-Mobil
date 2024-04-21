@@ -1,20 +1,20 @@
 <?php
-    include_once("../../config/koneksi.php");
-    require("../../library/fpdf.php");
+    include_once("../../../config/koneksi.php");
+    require("../../../library/fpdf.php");
 
     $pdf = new FPDF('L', 'mm', 'A4');
     $pdf->AddPage();
 
     $pdf->SetFont('Times', 'B', 13);
     $pdf->Cell(0, 15, '', 0, 1);
-    $pdf->Cell(250, 10, 'Data Pengembalian Buku', 0, 0, 'R');
+    $pdf->Cell(250, 10, 'Data Pengembalian Mobil', 0, 0, 'C');
 
     $pdf->Cell(10, 17, '', 0, 1);	
     $pdf->SetFont('Times', 'B', 9);
     $pdf->Cell(10, 7, 'No', 1, 0, 'C');
     $pdf->Cell(30, 7, 'ID Pengembalian', 1, 0, 'C');
-    $pdf->Cell(40, 7, 'Nama Peminjam', 1, 0, 'C');
-    $pdf->Cell(110, 7, 'Nama Buku', 1, 0, 'C');
+    $pdf->Cell(50, 7, 'Nama Penyewa', 1, 0, 'C');
+    $pdf->Cell(20, 7, 'ID Garasi', 1, 0, 'C');
     $pdf->Cell(30, 7, 'Tgl. Pengembalian', 1, 0, 'C');
     $pdf->Cell(27, 7, 'Jumlah', 1, 0, 'C');
 
@@ -22,26 +22,22 @@
     $pdf->SetFont('Times', '', 10);
 
     $no = 1;
-    $data = "SELECT pengembalian_buku.id_pengembalian, buku.judul AS nama_buku,
+    $data = "SELECT pengembalian_mobil.id_pengembalian, garasi.idgarasi AS id_garasi,
                     CASE
-                        WHEN siswa.nama IS NOT NULL THEN siswa.nama
-                        WHEN guru.nama IS NOT NULL THEN guru.nama
-                    END AS namapeminjaman,
-                    pengembalian_buku.jumlah_buku,
-                    buku.stok,
-                    buku.gambar AS gambar_buku,
-                    pengembalian_buku.tanggal_pengembalian,
-                    peminjaman.id_peminjaman AS peminjaman_id_peminjaman
+                        WHEN customer.nama IS NOT NULL THEN customer.nama
+                    END AS namapenyewa,
+                    pengembalian_mobil.stok_mobil,
+                    garasi.stok,
+                    pengembalian_mobil.tanggal_pengembalian,
+                    penyewaan.id_penyewaan AS penyewaan_id_penyewaan
                     FROM
-                    pengembalian_buku
+                    pengembalian_mobil
                     JOIN
-                    peminjaman ON pengembalian_buku.id_pengembalian = peminjaman.id_peminjaman
+                    penyewaan ON pengembalian_mobil.id_pengembalian = penyewaan.id_penyewaan
                     LEFT JOIN
-                    siswa ON peminjaman.siswa_idsiswa = siswa.idsiswa
-                    LEFT JOIN
-                    guru ON peminjaman.guru_idguru = guru.idguru
+                    customer ON penyewaan.customer_idcustomer = customer.idcustomer
                     JOIN
-                    buku ON pengembalian_buku.buku_id_buku = buku.id_buku";
+                    garasi ON pengembalian_mobil.garasi_idgarasi = garasi.idgarasi";
 
     $ambildata = mysqli_query($kon, $data) or die(mysqli_error($kon));
     $num = mysqli_num_rows($ambildata);
@@ -64,7 +60,7 @@
                 if ($firstRow) {
                     $pdf->Cell(10, 6 * $rowSpanCount, $no++, 1, 0, 'C');
                 $pdf->Cell(30, 6 * $rowSpanCount, $userAmbilData['id_pengembalian'], 1, 0, 'C');
-                    $pdf->Cell(40, 6 * $rowSpanCount, $userAmbilData['namapeminjaman'], 1, 0, 'C');
+                    $pdf->Cell(50, 6 * $rowSpanCount, $userAmbilData['namapenyewa'], 1, 0, 'C');
                     $firstRow = false;
                 } else {
                     $pdf->Cell(10, 6, '', 0, 0, 'C');
@@ -72,9 +68,9 @@
                     $pdf->Cell(40, 6, '', 0, 0, 'C');
                 }
 
-                $pdf->Cell(110, 6, $userAmbilData['nama_buku'], 1, 0, 'C');
+                $pdf->Cell(20, 6, $userAmbilData['id_garasi'], 1, 0, 'C');
                 $pdf->Cell(30, 6, $userAmbilData['tanggal_pengembalian'], 1, 0, 'C');
-                $pdf->Cell(27, 6, $userAmbilData['jumlah_buku'], 1, 1, 'C');
+                $pdf->Cell(27, 6, $userAmbilData['stok_mobil'], 1, 1, 'C');
             }
         }
     }

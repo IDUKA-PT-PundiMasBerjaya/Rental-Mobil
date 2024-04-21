@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 18, 2024 at 08:14 AM
+-- Generation Time: Apr 21, 2024 at 04:26 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -60,7 +60,7 @@ CREATE TABLE `customer` (
 --
 
 INSERT INTO `customer` (`idcustomer`, `nama`, `alamat`, `email`, `no_hp`) VALUES
-(1, 'Alief Try Helfian', 'Batam Kota', 'alieftry@gmail.com', '0885264562334'),
+(1, 'Alief Try Helfian', 'Batam Kota', 'alieftry@gmail.com', '085264562334'),
 (2, 'Enno Nurwansyah Rasyidi', 'Griya Kpn', 'tevirchan@gmail.com', '082388310607');
 
 -- --------------------------------------------------------
@@ -104,8 +104,9 @@ CREATE TABLE `kendaraan` (
 --
 
 INSERT INTO `kendaraan` (`idmobil`, `nama_mobil`, `merek`, `warna`, `tahun`, `gambar_mobil`, `harga_perhari`) VALUES
-(1, 'Ayla', 'Daihatsu', 'Merah', 2019, 'ayla.png', 75000),
-(2, 'WR-V Reson', 'Honda', 'Merah', 2023, 'Honda Reson.jpg', 75000);
+(1, 'Ayla', 'Daihatsu', 'Merah', 2019, 'ayla.png', 100000),
+(2, 'WR-V Reson', 'Honda', 'Merah', 2023, 'Honda Reson.jpg', 50000),
+(3, 'Rocky', 'Daihatsu', 'Merah', 2020, 'Daihatsu Rocky.jpg', 200000);
 
 -- --------------------------------------------------------
 

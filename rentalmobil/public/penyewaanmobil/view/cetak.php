@@ -7,64 +7,63 @@
 
     $pdf->SetFont('Times', 'B', 13);
     $pdf->Cell(0, 15, '', 0, 1);
-    $pdf->Cell(250, 10, 'Data Guru', 0, 0, 'R');
+    $pdf->Cell(250, 10, 'Data Penyewaan Mobil', 0, 0, 'C');
 
     $pdf->Cell(10, 17, '', 0, 1);	
     $pdf->SetFont('Times', 'B', 9);
     $pdf->Cell(10, 7, 'No', 1, 0, 'C');
-    $pdf->Cell(30, 7, 'ID Peminjaman', 1, 0, 'C');
-    $pdf->Cell(30, 7, 'Nama Peminjam', 1, 0, 'C');
-    $pdf->Cell(110, 7, 'Nama Buku', 1, 0, 'C');
+    $pdf->Cell(30, 7, 'ID Penyewaan', 1, 0, 'C');
+    $pdf->Cell(30, 7, 'Nama Penyewaan', 1, 0, 'C');
+    $pdf->Cell(80, 7, 'Nama Mobil', 1, 0, 'C');
     $pdf->Cell(22, 7, 'Jumlah', 1, 0, 'C');
     $pdf->Cell(22, 7, 'Sisa', 1, 0, 'C');
-    $pdf->Cell(30, 7, 'Tgl. Peminjaman', 1, 0, 'C');
+    $pdf->Cell(30, 7, 'Tgl. Penyewaan', 1, 0, 'C');
 
     $pdf->Cell(10, 7, '', 0, 1);
     $pdf->SetFont('Times', '', 10);
 
     $no = 1;
-    $data = "SELECT peminjaman_buku.id_peminjaman, buku.judul AS nama_buku,
+    $data = "SELECT penyewaan_mobil.id_penyewaan, kendaraan.nama_mobil AS nama_kendaraan,
                 CASE
-                    WHEN siswa.nama IS NOT NULL THEN siswa.nama
-                    WHEN guru.nama IS NOT NULL THEN guru.nama
-                END AS namapeminjaman,
-                peminjaman_buku.jumlah_buku,
-                buku.stok,
-                buku.gambar AS gambar_buku,
-                peminjaman.tanggal_pinjam
+                    WHEN customer.nama IS NOT NULL THEN customer.nama
+                END AS namapenyewa,
+                penyewaan_mobil.stok_mobil,
+                garasi.stok,
+                kendaraan.gambar_mobil AS gambar_kendaraan,
+                penyewaan.tanggal_sewa
                 FROM 
-                peminjaman_buku
+                penyewaan_mobil
                 JOIN 
-                peminjaman ON peminjaman_buku.id_peminjaman = peminjaman.id_peminjaman                
+                penyewaan ON penyewaan_mobil.id_penyewaan = penyewaan.id_penyewaan                
                 LEFT JOIN
-                siswa ON peminjaman.siswa_idsiswa = siswa.idsiswa
-                LEFT JOIN 
-                guru ON peminjaman.guru_idguru = guru.idguru
+                customer ON penyewaan.customer_idcustomer = customer.idcustomer
                 JOIN 
-                buku ON peminjaman_buku.buku_id_buku = buku.id_buku";
+                garasi ON penyewaan_mobil.garasi_idgarasi = garasi.idgarasi
+                JOIN
+                kendaraan ON garasi.kendaraan_idmobil = kendaraan.idmobil";
 
     $ambildata = mysqli_query($kon, $data) or die(mysqli_error($kon));
     $num = mysqli_num_rows($ambildata);
 
-    $prevpeminjamanID = null;
+    $prevpenyewaanID = null;
     $rowSpanCounts = [];
 
     if ($num > 0) {
         while ($row = mysqli_fetch_array($ambildata)) {
-            $peminjamanID = $row['id_peminjaman'];
-            $rowSpanCounts[$peminjamanID][] = $row;
+            $penyewaanID = $row['id_penyewaan'];
+            $rowSpanCounts[$penyewaanID][] = $row;
         }
 
         mysqli_data_seek($ambildata, 0);
         $no = 1;
-        foreach ($rowSpanCounts as $peminjamanID => $rows) {
+        foreach ($rowSpanCounts as $penyewaanID => $rows) {
             $rowSpanCount = count($rows);
             $firstRow = true;
             foreach ($rows as $key => $userAmbilData) {
                 if ($firstRow) {
                     $pdf->Cell(10, 6 * $rowSpanCount, $no++, 1, 0, 'C');
-                $pdf->Cell(30, 6 * $rowSpanCount, $userAmbilData['id_peminjaman'], 1, 0, 'C');
-                    $pdf->Cell(30, 6 * $rowSpanCount, $userAmbilData['namapeminjaman'], 1, 0, 'C');
+                $pdf->Cell(30, 6 * $rowSpanCount, $userAmbilData['id_penyewaan'], 1, 0, 'C');
+                    $pdf->Cell(30, 6 * $rowSpanCount, $userAmbilData['namapenyewa'], 1, 0, 'C');
                     $firstRow = false;
                 } else {
                     $pdf->Cell(10, 6 * $rowSpanCount, '', 0, 0, 'C');
@@ -72,10 +71,10 @@
                     $pdf->Cell(30, 6 * $rowSpanCount, '', 0, 0, 'C');
                 }
 
-                $pdf->Cell(110, 6, $userAmbilData['nama_buku'], 1, 0, 'C');
-                $pdf->Cell(22, 6, $userAmbilData['jumlah_buku'], 1, 0, 'C');
+                $pdf->Cell(80, 6, $userAmbilData['nama_kendaraan'], 1, 0, 'C');
+                $pdf->Cell(22, 6, $userAmbilData['stok_mobil'], 1, 0, 'C');
                 $pdf->Cell(22, 6, $userAmbilData['stok'], 1, 0, 'C');
-                $pdf->Cell(30, 6, $userAmbilData['tanggal_pinjam'], 1, 1, 'C');
+                $pdf->Cell(30, 6, $userAmbilData['tanggal_sewa'], 1, 1, 'C');
             }
         }
     }

@@ -37,7 +37,7 @@
 			$file_temp = $_FILES['gambar_mobil']['tmp_name'];
 
 			if (in_array($ekstensi, $ekstensi_diperbolehkan) === true) {
-				if ($ukuran <= 2000000) {
+				if ($ukuran <= 20000000) {
 					move_uploaded_file($file_temp, '../aset/' . $namagambar);
 					$insertData = mysqli_query($this->kon, "INSERT INTO kendaraan (idmobil, nama_mobil, merek, warna, tahun,gambar_mobil,  harga_perhari) VALUES ('$idmobil', '$nama_mobil', '$merek', '$warna', '$tahun','$namagambar',  '$harga_perhari')");
 

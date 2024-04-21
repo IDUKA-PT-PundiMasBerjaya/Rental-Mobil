@@ -97,7 +97,7 @@
         <nav>
             <div>
                 <a href="../../penyewaanmobil/view/tambah.php" class="btn bg-blue-500 text-white">Sewa Mobil</a>
-                <a href="../penyewaanmobil/view/cetak.php" target="_blank" class="btn bg-blue-500 text-white">Cetak</a>
+                <a href="../../penyewaanmobil/view/cetak.php" target="_blank" class="btn bg-blue-500 text-white">Cetak</a>
             </div>
             <a href="../../../public/dashboard/dashboard.php" class="btn bg-blue-500 text-white home-link">Home</a>
         </nav>

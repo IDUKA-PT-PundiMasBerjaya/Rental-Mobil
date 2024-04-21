@@ -166,10 +166,6 @@
 					<td>Tahun</td>
 					<td><input class="input" type="text" name="tahun" required></td>
 				</tr>
-                <tr>
-                    <td>Harga Per Hari</td>
-                    <td><input class="input" type="text" name="harga_perhari" required></td>
-                </tr>
 				<tr>
                     <td>Gambar</td>
                     <td><input type="file" name="gambar_mobil" required></td>
