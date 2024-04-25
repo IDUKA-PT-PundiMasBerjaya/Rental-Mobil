@@ -21,7 +21,7 @@
 
 	$kelasController = new CustomerController($kon);
 	if (isset($_GET['idcustomer'])) {
-		$id_customer = $_GET['idcustomer'];
+		$idcustomer = $_GET['idcustomer'];
 		$message = $kelasController->deleteCustomer($idcustomer);
 		echo $message;
 		header("Location: ../../dashboard/data/dashboardcustomer.php");

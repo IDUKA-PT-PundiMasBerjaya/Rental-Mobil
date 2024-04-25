@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 21, 2024 at 04:26 PM
+-- Generation Time: Apr 25, 2024 at 03:48 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -61,7 +61,8 @@ CREATE TABLE `customer` (
 
 INSERT INTO `customer` (`idcustomer`, `nama`, `alamat`, `email`, `no_hp`) VALUES
 (1, 'Alief Try Helfian', 'Batam Kota', 'alieftry@gmail.com', '085264562334'),
-(2, 'Enno Nurwansyah Rasyidi', 'Griya Kpn', 'tevirchan@gmail.com', '082388310607');
+(2, 'Enno Nurwansyah Rasyidi', 'Griya Kpn', 'kanekitouru2@gmail.com', '082388310607'),
+(3, 'Rivet', 'Griya Kpn', 'tevirchan@gmail.com', '082388310607');
 
 -- --------------------------------------------------------
 
@@ -80,7 +81,7 @@ CREATE TABLE `garasi` (
 --
 
 INSERT INTO `garasi` (`idgarasi`, `kendaraan_idmobil`, `stok`) VALUES
-(1, 1, 15),
+(1, 1, 10),
 (2, 2, 10);
 
 -- --------------------------------------------------------
@@ -128,7 +129,8 @@ CREATE TABLE `pengembalian_mobil` (
 --
 
 INSERT INTO `pengembalian_mobil` (`id_pengembalian`, `stok_mobil`, `tanggal_pengembalian`, `garasi_idgarasi`, `penyewaan_id_penyewaan`, `denda`) VALUES
-(1, 5, '2024-04-18', 1, 1, 800000);
+(1, 5, '2024-04-18', 1, 1, 800000),
+(2, 5, '2024-04-25', 2, 2, 350000);
 
 --
 -- Triggers `pengembalian_mobil`
@@ -179,7 +181,9 @@ CREATE TABLE `penyewaan_mobil` (
 --
 
 INSERT INTO `penyewaan_mobil` (`id_penyewaan`, `garasi_idgarasi`, `stok_mobil`) VALUES
-(1, 1, 5);
+(1, 1, 5),
+(2, 2, 5),
+(2, 1, 5);
 
 --
 -- Triggers `penyewaan_mobil`
@@ -251,7 +255,7 @@ ALTER TABLE `penyewaan_mobil`
 -- AUTO_INCREMENT for table `pengembalian_mobil`
 --
 ALTER TABLE `pengembalian_mobil`
-  MODIFY `id_pengembalian` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_pengembalian` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Constraints for dumped tables

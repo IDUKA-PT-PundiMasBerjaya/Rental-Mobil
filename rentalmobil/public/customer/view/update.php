@@ -40,166 +40,45 @@
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-	<title>Halaman Update Customer</title>
-	<link rel="stylesheet" href="../../css/output.css">
-    <style>
-        /* Style untuk judul tabel */
-        h1 {
-            text-align: center;
-            color: #020617;
-            font-weight: bold;
-            margin-bottom: 20px; /* Margin bawah sedikit diperkecil */
-            font-size: 30px; /* Ukuran judul lebih kecil */
-        }
-
-        nav {
-            display: flex;
-            justify-content: left; /* Pusatkan item ke tengah */
-            align-items: left; /* Pusatkan item secara vertikal */
-            margin-bottom: 10px; /* Jarak antara navbar dan judul */
-            width: 100%; /* Lebar nav mengisi keseluruhan */
-        }
-
-        nav a {
-            padding: 10px 20px;
-            margin-right: 15px;
-            color: #1a365d; /* Warna biru tua */
-            font-weight: bold;
-            text-decoration: none;
-            display: inline-block;
-            background-color: #e2e8f0; /* Warna latar belakang */
-            border: 2px solid #4299e1; /* Warna border */
-            border-radius: 4px; /* Bentuk sudut */
-        }
-
-        /* Hover effect */
-        nav a:hover {
-            background-color: #4299e1; /* Warna latar belakang saat hover */
-            color: #fff; /* Warna teks saat hover */
-        }
-
-        /* Style untuk form */
-        form {
-            margin-top: 10px; /* Margin atas sedikit diperkecil */
-            text-align: center; /* Pusatkan teks */
-            flex-wrap: wrap; /* Mengatur wrap agar tombol submit turun ke bawah pada layar kecil */
-        }
-
-        table {
-            width: 25%; /* Lebar tabel lebih diperkecil */
-            margin: 0 auto; /* Menengahkan tabel */
-            border-collapse: collapse;
-            margin-bottom: 10px; /* Margin bawah sedikit diperkecil */
-        }
-
-        table, th, td {
-            border: 1px solid #020617;
-            padding: 4px; /* Padding sedikit diperkecil */
-        }
-
-        input[type=text] {
-            width: 100%;
-            padding: 4px; /* Padding sedikit diperkecil */
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
-            margin-top: 2px; /* Margin atas dan bawah sedikit diperkecil */
-            margin-bottom: 8px; /* Margin atas dan bawah sedikit diperkecil */
-            font-size: 14px; /* Ukuran teks sedikit diperkecil */
-        }
-
-        input[type=submit] {
-            background-color: #4299e1;
-            color: white;
-            padding: 6px 12px; /* Padding sedikit diperkecil */
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 14px; /* Ukuran teks sedikit diperkecil */
-        }
-
-        input[type=submit]:hover {
-            background-color: #3182ce;
-        }
-
-        .success-message {
-            color: #155724;
-            background-color: #d4edda;
-            border-color: #c3e6cb;
-            padding: 4px;
-            margin-top: 6px; /* Margin atas sedikit diperkecil */
-            border: 1px solid transparent;
-            border-radius: 4px;
-            font-size: 14px; /* Ukuran teks sedikit diperkecil */
-        }
-        th:first-child {
-            color: #020617; /* Warna teks putih */
-        }
-
-        td {
-            font-weight: bold;
-            background-color: #4299e1; /* Warna latar belakang biru muda */
-        }
-
-        td {
-            font-size: 16px;
-        }
-        /* Style untuk sel yang sejajar dengan ID Buku */
-        td:first-child,
-        td:nth-child(2),
-        td:nth-child(3),
-        td:nth-child(4),
-        td:nth-child(5),
-        td:nth-child(6) {
-            color: #020617; /* Warna teks Hitam */
-        }
-        /* Style untuk tombol update */
-        .update-button {
-            text-align: center;
-            margin-top: 20px;
-        }
-
-        .update-button input[type=submit] {
-            width: auto; /* Mengembalikan lebar tombol ke ukuran default */
-        }
-    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Customer</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../src/output.css">
 </head>
-<body class="bg-gray-100">
-    <div class="container mx-auto py-4"> 
-	<h1>Update Data Customer</h1>
-		<nav>
-            <a href="../../dashboard/data/dashboardcustomer.php">Home</a>
-        </nav>
-	<form action="update.php" method="POST", name="update", enctype="multipart/form-data">
-		<table border="1">
-			<tr>
-				<td>ID Customer</td>
-				<td><input class="input_data_1" type="text" name="idcustomer" value="<?php echo $idcustomer ?>" readonly></td>
-			</tr>
-			<tr>
-				<td>Nama Customer</td>
-				<td><input class="input" type="text" name="nama" value="<?php echo $nama; ?>"></td>
-			</tr>
-			<tr>
-				<td>Alamat</td>
-				<td><input class="input" type="text" name="alamat" value="<?php echo $alamat; ?>"></td>
-			</tr>
-			<tr>
-				<td>Email</td>
-				<td><input class="input" type="text" name="email" value="<?php echo $email; ?>"></td>
-			</tr>
-			<tr>
-				<td>No HP</td>
-				<td><input class="input" type="text" name="no_hp" value="<?php echo $no_hp; ?>"></td>
-			</tr>
-		</table>
-			<div class="update-button">
-                <input type="hidden" name="idcustomer" value="<?php echo $idcustomer; ?>">
-                <input type="submit" name="update" value="Update">
-            </div>
-	</form>
-	</div>
+<body class="bg-gray-100 p-8">
+    <h1  class="text-2xl font-bold mb-4 text-center">Update Data Customer</h1>
+    <form action="update.php" method="post" enctype="multipart/form-data" class="max-w-md mx-auto bg-white p-8 rounded shadow-lg">
+        <div class="mb-4">
+            <label class="block font-bold">ID Customer</label>
+            <input type="text" name="idcustomer" value="<?php echo $idcustomer; ?>" readonly
+                class="w-full border border-gray-300 px-3 py-2 rounded-md">
+        </div>
+        <div class="mb-4">
+            <label class="block font-bold">Nama</label>
+            <input type="text" name="nama" value="<?php echo $nama; ?>"
+                class="w-full border border-gray-300 px-3 py-2 rounded-md">
+        </div>
+        <div class="mb-4">
+            <label class="block font-bold">Alamat</label>
+            <input type="text" name="alamat" value="<?php echo $alamat; ?>"
+                class="w-full border border-gray-300 px-3 py-2 rounded-md">
+        </div>
+        <div class="mb-4">
+            <label class="block font-bold">Email</label>
+            <input type="text" name="email" value="<?php echo $email; ?>"
+                class="w-full border border-gray-300 px-3 py-2 rounded-md">
+        </div>
+        <div class="mb-4">
+            <label class="block font-bold">No. HP</label>
+            <input type="number" name="no_hp" value="<?php echo $no_hp; ?>"
+                class="w-full border border-gray-300 px-3 py-2 rounded-md">
+        </div>
+            <a href="../../dashboard/data/dashboardcustomer.php" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded mr-4">Home</a>
+            <button type="submit" name="update"
+            class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-md">Update Data</button>
+    </form>
 </body>
 </html>

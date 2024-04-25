@@ -33,37 +33,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" href="./public/css/output.css">
     <title>Login</title>
+    <link href="src/output.css" rel="stylesheet">
+    <style>
+        .login-form {
+            max-width: 400px;
+            margin: auto;
+            padding: 20px;
+            background-color: #f7fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+    </style>
 </head>
-<body class="bg-gray-100 flex justify-center items-center h-screen">
-    <div class="bg-white p-8 rounded shadow-md max-w-md">
-        <h1 class="text-2xl font-bold mb-4 text-center">Login</h1>
-        <div class="mb-4"><!-- Tambahkan div ini untuk menambah jarak -->
-            <?php if(isset($error_message)): ?>
-                <div class="text-sm text-red-500"><?php echo $error_message; ?></div>
-            <?php endif; ?>
-        </div>
-        <form method="post" action="" class="space-y-6">
-            <div>
-                <label for="username" class="block">Username:</label>
-                <input type="text" name="username" required class="w-full border border-gray-300 rounded-md p-2">
+<body class="bg-gray-200">
+    <div class="flex justify-center items-center h-screen">
+        <form method="post" class="login-form bg-white p-8 shadow-md">
+            <h1 class="text-2xl font-bold mb-4">Login Page</h1>
+            <div class="mb-4">
+                <label for="username" class="block text-sm font-medium text-gray-600">Username:</label>
+                <input type="text" name="username" id="username" class="mt-1 px-4 py-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" required>
             </div>
-            <div>
-                <label for="password" class="block">Password:</label>
-                <input type="password" name="password" required class="w-full border border-gray-300 rounded-md p-2">
+            <div class="mb-6">
+                <label for="password" class="block text-sm font-medium text-gray-600">Password:</label>
+                <input type="password" name="password" id="password" class="mt-1 px-4 py-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" required>
             </div>
-            <div>
-                <label>Tidak Punya Akun? <span class="text-red-500"><a href="public/admin/view/tambah.php">Register</a></span></label>
-            </div>
-            <div>
-          <input type="submit" value="Login" class="w-full bg-indigo-500 text-white rounded-md p-2 hover:bg-indigo-600 mt-2">
-      </div>
-
+            <p class="text-sm text-gray-600">Tidak Punya Akun? <a href="public/admin/view/tambah.php" class="text-red-500">Register</a></p><br>
+            <button type="submit" class="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">Login</button>
         </form>
-        <?php if(isset($error_message)): ?>
-            <div class="text-sm text-red-500 mt-1"><?php echo $error_message; ?></div>
-        <?php endif; ?>
     </div>
 </body>
 </html>

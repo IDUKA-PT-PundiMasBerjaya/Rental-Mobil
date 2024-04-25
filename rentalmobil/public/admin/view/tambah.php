@@ -24,97 +24,35 @@ if (isset($_POST['submit'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register Akun Baru</title>
-    <link rel="stylesheet" href="../../../public/css/output.css"> <!-- Sesuaikan dengan path CSS Anda -->
+    <title>Register Akun</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../src/output.css">
     <style>
-        body {
-            background-color: #f7fafc;
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-        .container {
-            background-color: #ffffff;
+        .login-form {
+            max-width: 400px;
+            margin: auto;
             padding: 20px;
+            background-color: #f7fafc;
+            border: 1px solid #e2e8f0;
             border-radius: 8px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            width: 400px;
-        }
-        h1 {
-            text-align: center;
-        }
-        form {
-            margin-top: 20px;
-        }
-        table {
-            margin: auto;
-        }
-        table td {
-            padding: 8px;
-        }
-        input[type="text"], input[type="password"] {
-            width: calc(100% - 16px);
-            padding: 10px;
-            border: 1px solid #d1d5db;
-            border-radius: 4px;
-            margin-bottom: 10px;
-        }
-        input[type="submit"] {
-            background-color: #4f46e5;
-            color: #ffffff;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 4px;
-            cursor: pointer;
-            width: 100%;
-        }
-        p {
-            text-align: center;
-            margin-top: 10px;
-        }
-        p span a {
-            color: #4f46e5;
-        }
-        .success-message {
-            margin-top: 10px;
-            background-color: #d1fae5;
-            padding: 10px;
-            border-radius: 4px;
-            text-align: center;
         }
     </style>
 </head>
-<body>
-    <div class="container">
-        <h1>Register Akun</h1>
-        <form action="tambah.php" method="post" name="tambah" enctype="multipart/form-data">
-            <table>
-                <tr>
-                    <td> ID Admin </td>
-                    <td>:</td>
-                    <td><input type="text" name="id" value="<?php echo $adminController->tambahAdmin(); ?>" readonly></td>
-                </tr>
-                <tr>
-                    <td> Username </td>
-                    <td>:</td>
-                    <td><input type="text" name="username"></td>
-                </tr>
-                <tr>
-                    <td> Password </td>
-                    <td>:</td>
-                    <td><input type="password" name="password"></td>
-                </tr>
-            </table>
-            <input type="submit" name="submit" value="Tambah Data">
-            <p>Sudah Memiliki Akun? <span><a href="../../../login.php">Login</a></span></p>
-            <?php if (!empty($message)): ?>
-                <div class="success-message">
-                    <?php echo $message; ?>
-                </div>
-            <?php endif; ?>
+<body class="bg-gray-200">
+    <div class="flex justify-center items-center h-screen">
+        <form action="tambah.php" method="post" class="login-form bg-white p-8 shadow-md">
+            <h1 class="text-2xl font-bold mb-4">Daftar Akun</h1>
+            <div class="mb-4">
+                <label for="username" class="block text-sm font-medium text-gray-600">Username:</label>
+                <input type="text" name="username" id="username" class="mt-1 px-4 py-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" required">
+            </div>
+            <div class="mb-4">
+                <label for="password" class="block text-sm font-medium text-gray-600">Password:</label>
+                <input type="password" name="password" id="password" class="mt-1 px-4 py-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" required">
+            </div>
+            <p class="text-sm text-gray-600">Sudah memiliki Akun? <a href="../../../login.php" class="text-blue-500">Login</a></p><br>
+            <button type="submit" name="submit" class="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus-ring-blue-500 focus:ring-opacity-50">Register</button>
         </form>
     </div>
 </body>
