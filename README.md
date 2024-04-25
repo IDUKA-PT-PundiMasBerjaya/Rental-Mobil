@@ -1,7 +1,7 @@
 # Rental-Mobil
 
-Nama : Enno Nurwansyah Rasyidi
-Kelas : XI PPLG 3
+Nama : Enno Nurwansyah Rasyidi.
+Kelas : XI PPLG 3.
 Projek Ke 2 Tentang Penyewaan Mobil
 
 Cara Kerja Penyewaan Mobil
