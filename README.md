@@ -1,8 +1,6 @@
 # Rental-Mobil
 
-Nama : Enno Nurwansyah Rasyidi.
-Kelas : XI PPLG 3.
-Projek Ke 2 Tentang Penyewaan Mobil
+Nama : Enno Nurwansyah Rasyidi
 
 Cara Kerja Penyewaan Mobil
 * Pilih Mobil: Pilih mobil yang sesuai dengan kebutuhan perjalanan Anda dari berbagai pilihan yang kami sediakan. Anda dapat memilih mobil berdasarkan Merek, warna yang Anda inginkan.
